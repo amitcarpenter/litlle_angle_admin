@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../../header', { title: 'Express with EJS' }) %>
+
+    <body>
+        <div class="container-scroller">
+            <%- include('../../navbar') %>
+                <div class="container-fluid page-body-wrapper">
+                    <%- include('../../sidebar') %>
+                        <div class="main-panel">
+                            <div class="content-wrapper">
+                                <div class="row">
+                                    <div class="col-md-12 grid-margin stretch-card">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <p class="card-title">
+                                                    <%= about ? 'Update About' : 'Add New About' %>
+                                                </p>
+                                                <form id="aboutForm" enctype="multipart/form-data">
+                                                    <div class="row">
+                                                        <div class="col-6">
+                                                            <div class="form-group">
+                                                                <label for="title" class="control-label">Title</label>
+                                                                <input type="text" id="title" name="title"
+                                                                    required="required" class="form-control"
+                                                                    value="<%= about ? about.title : '' %>" />
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-6">
+                                                            <div class="form-group">
+                                                                <label for="description">Description</label>
+                                                                <textarea id="description" name="description"
+                                                                    required="required" class="form-control"
+                                                                    rows="5"><%= about ? about.description : '' %></textarea>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-12">
+                                                            <div class="form-group">
+                                                                <div class="d-flex justify-content-between">
+                                                                    <button type="submit" class="btn btn-primary">
+                                                                        <%= about ? 'Update About' : 'Add About' %>
+                                                                    </button>
+                                                                    <a href="/about" class="btn btn-danger">Cancel</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <%- include('../../footer') %>
+                        </div>
+                </div>
+        </div>
+        <%- include('../../foot') %>
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script>
+                $(document).ready(function () {
+                    $("#aboutForm").submit(function (e) {
+                        e.preventDefault();
+
+                        var formData = new FormData(this);
+
+                        console.log('FormData Entries:');
+                        for (var pair of formData.entries()) {
+                            console.log(pair[0] + ', ' + pair[1]);
+                        }
+
+                        var actionUrl = "<%= about ? '/api/about/create' : '/api/about/create' %>";
+                        var method = "POST";
+
+                        $.ajax({
+                            url: actionUrl,
+                            type: method,
+                            data: formData,
+                            contentType: false,
+                            processData: false,
+                            success: function (response) {
+                                alert("<%= about ? 'About updated successfully' : 'About added successfully' %>");
+                                window.location.href = "/about";
+                            },
+                            error: function (xhr, status, error) {
+                                console.error("Error processing request:", error);
+                                alert("<%= about ? 'Failed to update About. Please try again later.' : 'Failed to add About. Please try again later.' %>");
+                            },
+                        });
+                    });
+                });
+
+            </script>
+    </body>
+
+</html>

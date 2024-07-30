@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../../header', { title: 'Express with EJS' }) %>
+  <body>
+    <div class="container-scroller">
+      <!-- partial:partials/_navbar.html -->
+      <%- include('../../navbar') %>
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_settings-panel.html -->
+        <%- include('../../sidebar') %>
+        <!-- partial -->
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="row">
+              <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <p class="card-title">Add New Facility</p>
+                    <form id="facilityForm" enctype="multipart/form-data">
+                      <div class="row">
+                        <div class="col-6">
+                          <div class="form-group">
+                            <label for="title" class="control-label">Title</label>
+                            <input
+                              type="text"
+                              id="title"
+                              name="title"
+                              required="required"
+                              class="form-control"
+                            />
+                          </div>
+                        </div>
+
+                        <div class="col-6">
+                          <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea
+                              id="description"
+                              name="description"
+                              required="required"
+                              class="form-control"
+                              rows="5"
+                            ></textarea>
+                          </div>
+                        </div>
+
+                        <div class="col-12">
+                          <div class="form-group">
+                            <label for="image" class="control-label">Image</label>
+                            <input
+                              type="file"
+                              id="image"
+                              name="image"
+                              required="required"
+                              class="form-control"
+                            />
+                          </div>
+                        </div>
+
+                        <div class="col-12">
+                          <div class="form-group">
+                            <div class="d-flex justify-content-between">
+                              <button type="submit" class="btn btn-primary">
+                                Add Facility
+                              </button>
+                              <a href="/facilities" class="btn btn-danger">Cancel</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <%- include('../../footer') %>
+        </div>
+      </div>
+    </div>
+    <%- include('../../foot') %>
+    <!-- Load the full version of jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Facility Create -->
+    <script>
+      $(document).ready(function () {
+        $("#facilityForm").submit(function (e) {
+          e.preventDefault();
+
+          var formData = new FormData(this);
+
+          $.ajax({
+            url: "/api/facilities/create",
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+              alert("Facility added successfully");
+              window.location.href = "/facilities";
+            },
+            error: function (xhr, status, error) {
+              console.error("Error adding facility:", error);
+              alert("Failed to add facility. Please try again later.");
+            },
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

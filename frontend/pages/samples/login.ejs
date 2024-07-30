@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <title>AR TechWorld || Admin Login</title>
+  <link rel="stylesheet" href="../../vendors/feather/feather.css" />
+  <link rel="stylesheet" href="../../vendors/ti-icons/css/themify-icons.css" />
+  <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css" />
+  <link rel="stylesheet" href="../../css/vertical-layout-light/style.css" />
+  <link rel="shortcut icon" href="../../images/favicon.png" />
+  <style>
+    .brand-logo {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .logo_image {
+      height: 100%;
+      width: 100px
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container-scroller">
+    <div class="container-fluid page-body-wrapper full-page-wrapper">
+      <div class="content-wrapper d-flex align-items-center auth px-0">
+        <div class="row w-100 mx-0">
+          <div class="col-lg-4 mx-auto">
+            <div class="auth-form-light text-left py-5 px-4 px-sm-5">
+              <div class="brand-logo">
+                <img class="logo_image" src="../../images/logo.png" alt="logo" />
+              </div>
+              <h4>Hello! let's get started</h4>
+              <h6 class="font-weight-light">Sign in to continue.</h6>
+
+              <form id="loginForm" class="pt-3" method="post" onsubmit="event.preventDefault(); validateAndLogin();">
+                <div class="form-group">
+                  <input type="email" class="form-control form-control-lg" id="email" placeholder="Username"
+                    oninput="clearError('userNameError')" />
+                  <p id="userNameError" style="color: red"></p>
+                </div>
+                <div class="form-group">
+                  <input type="password" class="form-control form-control-lg" id="password" placeholder="Password"
+                    oninput="clearError('passwordError')" required />
+                  <p id="passwordError" style="color: red"></p>
+                </div>
+                <div id="setSuccessMsg" style="color: green"></div>
+                <div id="login_error" style="color: red"></div>
+                <div class="mt-3">
+                  <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">SIGN
+                    IN</button>
+                </div>
+                <div class="my-2 d-flex justify-content-between align-items-center"></div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+ 
+  <script>
+    async function validateAndLogin() {
+      // Clear previous error messages
+      document.getElementById('login_error').innerText = '';
+      document.getElementById('setSuccessMsg').innerText = '';
+
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      // Basic client-side validation
+      if (!email) {
+        document.getElementById('userNameError').innerText = 'Email is required';
+        return;
+      }
+      if (!password) {
+        document.getElementById('passwordError').innerText = 'Password is required';
+        return;
+      }
+
+      // Prepare the data to send
+      const data = {
+        email,
+        password
+      };
+
+      try {
+        const response = await fetch('/api/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          document.getElementById('setSuccessMsg').innerText = result.message;
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+          localStorage.setItem("accessToken", data.jwt_token);
+          sessionStorage.setItem("accessToken", data.jwt_token);
+          window.location.href = "/";
+          // Redirect or perform actions upon successful login
+        } else {
+          document.getElementById('login_error').innerText = result.message;
+        }
+      } catch (error) {
+        document.getElementById('login_error').innerText = 'An error occurred. Please try again later.';
+      }
+    }
+
+    function clearError(id) {
+      document.getElementById(id).innerText = '';
+    }
+  </script>
+
+  <script src="../../vendors/js/vendor.bundle.base.js"></script>
+  <script src="../../js/off-canvas.js"></script>
+  <script src="../../js/hoverable-collapse.js"></script>
+  <script src="../../js/template.js"></script>
+  <script src="../../js/settings.js"></script>
+  <script src="../../js/todolist.js"></script>
+</body>
+
+</html>

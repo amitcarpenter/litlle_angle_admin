@@ -1,0 +1,41 @@
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <title>Little Angles | AR Tech World</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="vendors/feather/feather.css" />
+  <link rel="stylesheet" href="vendors/ti-icons/css/themify-icons.css" />
+  <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css" />
+  <!-- endinject -->
+  <!-- Plugin css for this page -->
+  <link rel="stylesheet" href="vendors/datatables.net-bs4/dataTables.bootstrap4.css" />
+  <link rel="stylesheet" href="vendors/ti-icons/css/themify-icons.css" />
+  <link rel="stylesheet" type="text/css" href="js/select.dataTables.min.css" />
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="css/vertical-layout-light/style.css" />
+  <!-- endinject -->
+  <link rel="shortcut icon" href="images/favicon.png" />
+
+  <!-- DataTable -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css" />
+  <script type="text/javascript" charset="utf8"
+    src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+
+    <script src="https://kit.fontawesome.com/617e5bec98.js" crossorigin="anonymous"></script>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+
+
+<!-- functionality for the accdess fo the user  -->
+<script>
+  const accessToken =
+    localStorage.getItem("accessToken") ||
+    sessionStorage.getItem("accessToken");
+
+  if (!accessToken) {
+    window.location.href = "/login";
+  }
+</script>

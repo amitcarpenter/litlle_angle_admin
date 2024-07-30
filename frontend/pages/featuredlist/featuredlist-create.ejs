@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../../header', { title: 'Express with EJS' }) %>
+
+  <link
+    href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css"
+    rel="stylesheet"
+  />
+  <link
+    rel="stylesheet"
+    href="https://malikfarhan.com/plugins/icheck-bootstrap/icheck-bootstrap.min.css"
+  />
+  <link
+    rel="stylesheet"
+    href="https://malikfarhan.com/plugins/summernote/summernote-bs4.css"
+  />
+  <body>
+    <div class="container-scroller">
+      <!-- partial:partials/_navbar.html -->
+      <%- include('../../navbar') %>
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_settings-panel.html -->
+
+        <%- include('../../sidebar') %>
+        <!-- partial -->
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="row">
+              <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-header">
+                    <div class="d-flex justify-content-between">
+                      <h3 class="card-title">Find MLS Property Details</h3>
+                      <div class="d-flex justify-content-between"></div>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="mb-4">
+                      <button type="submit" id="submit" class="btn btn-primary">
+                        Add to featured lisiting
+                      </button>
+                    </div>
+                    <div class="row">
+                      <input type="hidden" name="search_by" id="search_by" />
+                      <div class="col-8">
+                        <div class="form-group">
+                          <input
+                            type="text"
+                            id="search-box"
+                            name="name"
+                            required="required"
+                            value=""
+                            autocomplete="off"
+                            placeholder="Address | MLS"
+                            class="form-control"
+                          />
+                          <div
+                            id="suggesstion-box"
+                            class="search-result"
+                            style="display: none"
+                          >
+                            <ul id="country-list" class="country-list"></ul>
+                          </div>
+                          <div
+                            id="no-result-box"
+                            class="search-result"
+                            style="display: none"
+                          >
+                            <div><span>No Search Results Found</span></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-4">
+                        <div class="form-group">
+                          <button
+                            type="button"
+                            id="search_result"
+                            class="btn btn-primary btn"
+                            style="width: 100%"
+                          >
+                            Search
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <div id="result"></div>
+                    <div id="table" class="card card-solid d-none">
+                      <div class="card-body pb-0">
+                        <div
+                          id="padding-item-drop"
+                          class="row d-flex align-items-stretch connectedSortable"
+                        ></div>
+                      </div>
+                    </div>
+                    <div id="table" class="card card-solid d-none">
+                      <div class="card-body pb-0">
+                        <div
+                          id="padding-item-drop"
+                          class="row d-flex align-items-stretch connectedSortable"
+                        ></div>
+                      </div>
+                    </div>
+                    <table id="tb1" class="table table-bordered table-striped">
+                      <thead>
+                        <tr></tr>
+                      </thead>
+                      <tbody id=""></tbody>
+                      <tfoot>
+                        <tr></tr>
+                      </tfoot>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <%- include('../../footer') %>
+        </div>
+      </div>
+    </div>
+    <%- include('../../foot') %>
+    <script src="https://malikfarhan.com/plugins/summernote/summernote-bs4.min.js"></script>
+    <script>
+      $(function () {
+        // Summernote
+        $(".textarea").summernote({
+          height: 300,
+        });
+      });
+    </script>
+  </body>
+</html>

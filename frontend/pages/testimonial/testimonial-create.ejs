@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../../header', { title: 'Express with EJS' }) %>
+  <body>
+    <div class="container-scroller">
+      <!-- partial:partials/_navbar.html -->
+      <%- include('../../navbar') %>
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_settings-panel.html -->
+
+        <%- include('../../sidebar') %>
+        <!-- partial -->
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="row">
+              <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <p class="card-title">Add New Blog</p>
+                    <form id="testimonialForm">
+                      <div class="row">
+                        <div class="col-6">
+                          <div class="form-group">
+                            <label for="name" class="control-label">
+                              Name</label
+                            >
+                            <input
+                              type="text"
+                              id="name"
+                              name="name"
+                              required="required"
+                              value=""
+                              class="form-control"
+                            />
+                            <div id="title-count"></div>
+                          </div>
+                        </div>
+
+                        <div class="col-6">
+                          <div class="form-group">
+                            <label for="designation">Rating</label>
+                            <input
+                              type="number"
+                              id="rating"
+                              name="rating"
+                              value=""
+                              class="form-control"
+                            />
+                          </div>
+                        </div>
+
+                        <div class="col-12">
+                          <div class="form-group">
+                            <label for="description" class="control-label"
+                              >Message
+                              <small
+                                >(Do not capitalise entire sentence)</small
+                              ></label
+                            >
+                            <textarea
+                              id="message"
+                              name="message"
+                              required="required"
+                              class="form-control textarea"
+                              rows="10"
+                            ></textarea>
+                            <div id="des-count"></div>
+                          </div>
+                        </div>
+
+                        <div class="col-12">
+                          <div class="form-group">
+                            <div class="d-flex justify-content-between">
+                              <button type="submit" class="btn btn-primary">
+                                Add testimonial
+                              </button>
+                              <a href="/testimonial" class="btn btn-danger"
+                                >Cancel</a
+                              >
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <%- include('../../footer') %>
+        </div>
+      </div>
+    </div>
+    <%- include('../../foot') %>
+    <!-- Testimonial Create -->
+    <script>
+      $(document).ready(function () {
+        $("#testimonialForm").submit(function (e) {
+          e.preventDefault();
+          var formData = {
+            name: $("#name").val(),
+            message: $("#message").val(),
+            rating: $("#rating").val(),
+          };
+          $.ajax({
+            url: "https://api.maninderrealestate.com/api/admin/testimonials/create",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(formData),
+            success: function (response) {
+              alert("Testimonial added successfully");
+              window.location.href = "/testimonial";
+            },
+            error: function (xhr, status, error) {
+              console.error("Error adding testimonial:", error);
+              alert("Failed to add testimonial. Please try again later.");
+            },
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

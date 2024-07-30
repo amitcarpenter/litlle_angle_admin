@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../../header', { title: 'Express with EJS' }) %>
+  <body>
+    <div class="container-scroller">
+      <!-- partial:partials/_navbar.html -->
+      <%- include('../../navbar') %>
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_settings-panel.html -->
+
+        <%- include('../../sidebar') %>
+        <!-- partial -->
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="row">
+              <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <p class="card-title">Add New Exclusive Listing</p>
+                    <form id="blogForm" enctype="multipart/form-data">
+                      <div class="row">
+                        <div class="col-6">
+                          <div class="form-group">
+                            <label for="exclusive_price" class="control-label"
+                              >Price</label
+                            >
+                            <input
+                              type="text"
+                              id="exclusive_price"
+                              name="exclusive_price"
+                              required="required"
+                              value=""
+                              maxlength="60"
+                              class="form-control"
+                            />
+                          </div>
+                        </div>
+
+                        <div class="col-6">
+                          <div class="form-group">
+                            <label for="cover_photo"
+                              >Exclusive Listing Image
+                              <small>(Not less than 1194X505 px)</small></label
+                            >
+                            <div class="input-group">
+                              <div class="custom-file">
+                                <input
+                                  type="file"
+                                  id="exclusive_image"
+                                  name="exclusive_image"
+                                  class="custom-file-input"
+                                />
+                                <label
+                                  for="exclusive_image"
+                                  class="custom-file-label"
+                                  >Choose file</label
+                                >
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-6">
+                          <div class="form-group">
+                            <label for="exclusive_address" class="control-label"
+                              >Address</label
+                            >
+                            <input
+                              type="text"
+                              id="exclusive_address"
+                              name="exclusive_address"
+                              required="required"
+                              value=""
+                              maxlength="60"
+                              class="form-control"
+                            />
+                          </div>
+                        </div>
+
+                        <div class="col-6">
+                          <div class="form-group">
+                            <label for="exclusive_bedroom" class="control-label"
+                              >Bedroom</label
+                            >
+                            <input
+                              type="number"
+                              id="exclusive_bedroom"
+                              name="exclusive_bedroom"
+                              required="required"
+                              value=""
+                              maxlength="60"
+                              class="form-control"
+                            />
+                          </div>
+                        </div>
+
+                        <div class="col-6">
+                          <div class="form-group">
+                            <label
+                              for="exclusive_bathroom"
+                              class="control-label"
+                              >Bathroom</label
+                            >
+                            <input
+                              type="number"
+                              id="exclusive_bathroom"
+                              name="exclusive_bathroom"
+                              required="required"
+                              value=""
+                              maxlength="60"
+                              class="form-control"
+                            />
+                          </div>
+                        </div>
+
+                        <div class="col-6">
+                          <div class="form-group">
+                            <label for="exclusive_area" class="control-label"
+                              >Area</label
+                            >
+                            <input
+                              type="text"
+                              id="exclusive_area"
+                              name="exclusive_area"
+                              required="required"
+                              value=""
+                              maxlength="60"
+                              class="form-control"
+                            />
+                          </div>
+                        </div>
+
+                        <div class="col-12">
+                          <div class="form-group">
+                            <div class="d-flex justify-content-between">
+                              <button
+                                id="submitBtn"
+                                type="submit"
+                                class="btn btn-primary"
+                              >
+                                Add Exclusive
+                              </button>
+                              <a href="/exclusive" class="btn btn-danger"
+                                >Cancel</a
+                              >
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <%- include('../../footer') %>
+        </div>
+      </div>
+    </div>
+
+    <%- include('../../foot') %>
+
+    <!-- Create Exclusive listing -->
+    <script>
+      $(document).ready(function () {
+        $("#submitBtn").on("click", function (event) {
+          event.preventDefault();
+
+          var form = $("#blogForm")[0];
+
+          console.log(form);
+          var formData = new FormData(form);
+
+          console.log(formData, "formdata");
+
+          $.ajax({
+            type: "POST",
+            enctype: "multipart/form-data",
+            url: "https://api.maninderrealestate.com/api/admin/exclusive/create",
+            data: formData,
+            processData: false,
+            contentType: false,
+            cache: false,
+            success: function (response) {
+              alert("Exclusive listing saved successfully");
+              console.log(response);
+              window.location.href = "/exclusive";
+            },
+            error: function (error) {
+              alert("Error saving Exclusive listing");
+              console.error("Error saving Exclusive listing:", error);
+            },
+          });
+        });
+      });
+    </script>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+      crossorigin="anonymous"
+    />
+    <!-- Bootstrap JS -->
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+      integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shCv+A+nA/1Q9wbIhev2Lw0P3ZYLaV8OELbK+"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

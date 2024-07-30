@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../../header', { title: 'Express with EJS' }) %>
+
+  <link
+    href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css"
+    rel="stylesheet"
+  />
+  <link
+    rel="stylesheet"
+    href="https://malikfarhan.com/plugins/icheck-bootstrap/icheck-bootstrap.min.css"
+  />
+  <link
+    rel="stylesheet"
+    href="https://malikfarhan.com/plugins/summernote/summernote-bs4.css"
+  />
+  <body>
+    <div class="container-scroller">
+      <!-- partial:partials/_navbar.html -->
+      <%- include('../../navbar') %>
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_settings-panel.html -->
+
+        <%- include('../../sidebar') %>
+        <!-- partial -->
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="row">
+              <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <p class="card-title">Add About</p>
+                    <div class="row">
+                      <div class="col-12">
+                        <!-- Add the following textarea for Summernote -->
+                        <!-- <div id="summernote"><p>Hello Summernote</p></div> -->
+                        <textarea
+                          id="about_us"
+                          name="about_us"
+                          required="required"
+                          class="form-control textarea"
+                          style="display: none"
+                        >
+                        </textarea>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-9">
+                <div class="form-group">
+                  <div class="d-flex justify-content-between">
+                    <button type="submit" id="submit" class="btn btn-primary">
+                      Save
+                    </button>
+                    <a href="" class="btn btn-danger">Cancel</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <%- include('../../footer') %>
+        </div>
+      </div>
+    </div>
+    <%- include('../../foot') %>
+    <script src="https://malikfarhan.com/plugins/summernote/summernote-bs4.min.js"></script>
+    <script>
+      $(function () {
+        // Summernote
+        $(".textarea").summernote({
+          height: 300,
+        });
+      });
+    </script>
+  </body>
+</html>

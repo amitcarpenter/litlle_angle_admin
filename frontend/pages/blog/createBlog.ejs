@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../../header', { title: 'Express with EJS' }) %>
+  <link
+    href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css"
+    rel="stylesheet"
+  />
+  <link
+    rel="stylesheet"
+    href="https://malikfarhan.com/plugins/icheck-bootstrap/icheck-bootstrap.min.css"
+  />
+  <link
+    rel="stylesheet"
+    href="https://malikfarhan.com/plugins/summernote/summernote-bs4.css"
+  />
+
+  <body>
+    <div class="container-scroller">
+      <!-- partial:partials/_navbar.html -->
+      <%- include('../../navbar') %>
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_settings-panel.html -->
+
+        <%- include('../../sidebar') %>
+        <!-- partial -->
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="row">
+              <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <p class="card-title">Add New Blog</p>
+                    <form id="blogForm" enctype="multipart/form-data">
+                      <div class="row">
+                        <div class="col-6">
+                          <div class="form-group">
+                            <label for="title" class="control-label"
+                              >Title</label
+                            >
+                            <input
+                              type="text"
+                              id="title"
+                              name="title"
+                              required="required"
+                              value=""
+                              maxlength="60"
+                              class="form-control"
+                            />
+                            <div id="title-count">(0/60)</div>
+                          </div>
+                        </div>
+
+                        <div class="col-6">
+                          <div class="form-group">
+                            <label for="show_in" class="control-label"
+                              >Category</label
+                            >
+                            <select
+                              id="category-dropdown"
+                              name="category"
+                              required="required"
+                              class="form-control"
+                            ></select>
+                          </div>
+                        </div>
+
+                        <div class="col-6">
+                          <div class="form-group">
+                            <label for="cover_photo"
+                              >Cover Photo
+                              <small>(Not less than 1194X505 px)</small></label
+                            >
+                            <div class="input-group">
+                              <div class="custom-file">
+                                <input
+                                  type="file"
+                                  id="mainImage"
+                                  name="mainImage"
+                                  class="custom-file-input"
+                                />
+                                <label for="mainImage" class="custom-file-label"
+                                  >Choose file</label
+                                >
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-6">
+                          <div class="form-group">
+                            <label for="meta_title" class="control-label"
+                              >Author</label
+                            >
+                            <input
+                              type="text"
+                              id="author"
+                              name="author"
+                              required="required"
+                              value=""
+                              maxlength="60"
+                              class="form-control"
+                            />
+                            <div id="author-count"></div>
+                          </div>
+                        </div>
+
+                        <div class="col-12">
+                          <div class="form-group">
+                            <label for="description" class="control-label"
+                              >AuthorBio</label
+                            >
+                            <textarea
+                              id="description"
+                              name="authorBio"
+                              maxlength="160"
+                              class="form-control"
+                            ></textarea>
+                            <div id="des-count"></div>
+                          </div>
+                        </div>
+
+                        <div class="col-12">
+                          <div class="form-group">
+                            <label for="content" class="control-label"
+                              >Content
+                              <small
+                                >(Do not capitalise entire sentence)</small
+                              ></label
+                            >
+                            <textarea
+                              id="content"
+                              name="content"
+                              required="required"
+                              class="form-control textarea"
+                            ></textarea>
+                            <div id="content-count"></div>
+                          </div>
+                        </div>
+
+                        <div class="col-12">
+                          <div class="form-group">
+                            <div class="d-flex justify-content-between">
+                              <button
+                                id="submitBtn"
+                                type="submit"
+                                class="btn btn-primary"
+                              >
+                                Add Blog
+                              </button>
+                              <a href="/blog" class="btn btn-danger">Cancel</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <%- include('../../footer') %>
+        </div>
+      </div>
+    </div>
+
+    <!--Add Category Modal -->
+    <div
+      class="modal fade"
+      id="myModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Add New Category</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <!-- Form to add new category -->
+            <form id="addCategoryForm">
+              <div class="form-group">
+                <label for="categoryName">Category Name:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="name"
+                  name="name"
+                  required
+                />
+              </div>
+
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button type="button" class="btn btn-primary" id="saveCategory">
+                  Save
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Delete Category Modal -->
+    <div
+      class="modal fade"
+      id="myDeleteCategoryModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Delete Category</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="deleteCategoryForm">
+              <div class="form-group">
+                <label for="categoryToDelete">Select Category to Delete:</label>
+                <select class="form-control" id="categoryToDelete">
+                  <!-- Categories will be dynamically populated here -->
+                </select>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              class="btn btn-danger"
+              onclick="performDelete()"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%- include('../../foot') %>
+    <script src="https://malikfarhan.com/plugins/summernote/summernote-bs4.min.js"></script>
+
+    <!-- summer note script -->
+    <script>
+      $(function () {
+        // Summernote
+        $(".textarea").summernote({
+          height: 300,
+        });
+      });
+    </script>
+
+    <!-- summer note script -->
+    <script>
+      $(function () {
+        // Summernote
+        $(".textarea").summernote({
+          height: 300,
+        });
+      });
+      $("#meta_title").keydown(function () {
+        var count = this.value.length;
+        $("#meta-count").html("(" + count + "/" + "60" + ")");
+      });
+      $("#description").keydown(function () {
+        var count = this.value.length;
+        $("#des-count").html("(" + count + "/" + "160" + ")");
+      });
+      $("#title").keydown(function () {
+        var count = this.value.length;
+
+        $("#title-count").html("(" + count + "/" + "60" + ")");
+      });
+    </script>
+
+    <!-- Create Blog -->
+    <script>
+      $(document).ready(function () {
+        $("#submitBtn").on("click", function (event) {
+          event.preventDefault(); // Prevent default form submission
+
+          var form = $("#blogForm")[0];
+
+          console.log(form);
+          var formData = new FormData(form);
+
+          console.log(formData, "formdata");
+
+          $.ajax({
+            type: "POST",
+            enctype: "multipart/form-data",
+            url: "https://api.maninderrealestate.com/api/admin/blog/create",
+            data: formData,
+            processData: false,
+            contentType: false,
+            cache: false,
+            success: function (response) {
+              alert("Blog post saved successfully");
+              console.log(response);
+              window.location.href = "/blog";
+            },
+            error: function (error) {
+              alert("Error saving blog post");
+              console.error("Error saving blog post:", error);
+            },
+          });
+        });
+      });
+    </script>
+
+    <!-- category drop down -->
+    <script>
+      function fetchCategories() {
+        fetch(
+          "https://api.maninderrealestate.com/api/admin/blog/category/list-all"
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.status) {
+              const categories = data.data;
+              const dropdown = document.getElementById("category-dropdown");
+              dropdown.innerHTML = "";
+              const defaultOption = document.createElement("option");
+              defaultOption.value = "";
+              defaultOption.textContent = "--select--";
+              dropdown.appendChild(defaultOption);
+
+              categories.forEach((category) => {
+                const option = document.createElement("option");
+                option.value = category._id;
+                option.textContent = category.name;
+                dropdown.appendChild(option);
+              });
+
+              // Add option for add a category
+              const addNewOption = document.createElement("option");
+              addNewOption.value = "add_new";
+              addNewOption.textContent = "+ Add New Category";
+              addNewOption.style.cursor = "pointer";
+              dropdown.appendChild(addNewOption);
+
+              // Add option for deleting a category
+              const deleteOption = document.createElement("option");
+              deleteOption.value = "delete";
+              deleteOption.innerHTML = `Delete a Category`;
+              dropdown.appendChild(deleteOption);
+              deleteOption.style.color = "red";
+              deleteOption.style.cursor = "pointer";
+            } else {
+              console.error("Failed to fetch categories:", data.message);
+            }
+          })
+          .catch((error) => {
+            console.error("Error fetching categories:", error);
+          });
+      }
+
+      function handleDropdownChange(event) {
+        if (event.target.value === "add_new") {
+          openModal();
+        }
+        if (event.target.value === "delete") {
+          openDeleteModal();
+        }
+      }
+
+      function openModal() {
+        $("#myModal").modal("show");
+      }
+
+      document.addEventListener("DOMContentLoaded", fetchCategories);
+      const dropdown = document.getElementById("category-dropdown");
+      dropdown.addEventListener("change", handleDropdownChange);
+    </script>
+
+    <!--add category -->
+    <script>
+      function addCategory(categoryName) {
+        fetch(
+          "https://api.maninderrealestate.com/api/admin/blog/category/create",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ name: categoryName }),
+          }
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.status) {
+              alert(data.message);
+              fetchCategories();
+            } else {
+              console.error("Failed to add category:", data.message);
+            }
+          })
+          .catch((error) => {
+            console.error("Error adding category:", error);
+          });
+      }
+
+      document
+        .getElementById("saveCategory")
+        .addEventListener("click", function () {
+          const categoryName = document.getElementById("name").value.trim();
+          if (categoryName) {
+            console.log(categoryName);
+            addCategory(categoryName);
+            $("#myModal").modal("hide");
+          } else {
+            alert("Please enter a category name.");
+          }
+        });
+    </script>
+
+    <!-- Delete Category -->
+    <script>
+      function fetchCategoriesForDeletion() {
+        fetch(
+          "https://api.maninderrealestate.com/api/admin/blog/category/list-all"
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.status) {
+              const categories = data.data;
+              const categoryDropdown =
+                document.getElementById("categoryToDelete");
+              categoryDropdown.innerHTML = "";
+              categories.forEach((category) => {
+                const option = document.createElement("option");
+                option.value = category._id;
+                option.textContent = category.name;
+                categoryDropdown.appendChild(option);
+              });
+            } else {
+              console.error("Failed to fetch categories:", data.message);
+            }
+          })
+          .catch((error) => {
+            console.error("Error fetching categories:", error);
+          });
+      }
+
+      async function deleteCategory(categoryIdToDelete) {
+        try {
+          const response = await fetch(
+            `https://api.maninderrealestate.com/api/admin/blog/category/delete/${categoryIdToDelete}`,
+            {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          const data = await response.json();
+          if (response.ok) {
+            alert(data.message);
+            fetchCategoriesForDeletion();
+            fetchCategories();
+          } else {
+            console.error("Failed to delete category:", data.message);
+            alert("Failed to delete category. Please try again.");
+          }
+        } catch (error) {
+          console.error("Error deleting category:", error);
+          alert("Error deleting category. Please try again.");
+        }
+      }
+
+      function performDelete() {
+        const categoryIdToDelete =
+          document.getElementById("categoryToDelete").value;
+        deleteCategory(categoryIdToDelete);
+        $("#myDeleteCategoryModal").modal("hide");
+      }
+
+      // Open delete category modal
+      function openDeleteModal() {
+        fetchCategoriesForDeletion();
+        $("#myDeleteCategoryModal").modal("show");
+      }
+    </script>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+      crossorigin="anonymous"
+    />
+    <!-- Bootstrap JS -->
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+      integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shCv+A+nA/1Q9wbIhev2Lw0P3ZYLaV8OELbK+"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

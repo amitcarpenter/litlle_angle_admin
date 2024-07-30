@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../../header', { title: 'Express with EJS' }) %>
+  <style>
+    .table td img,
+    .jsgrid .jsgrid-table td img {
+      width: 100px !important;
+      height: 100px !important;
+      border-radius: 0;
+    }
+  </style>
+
+  <body>
+    <div class="container-scroller">
+      <%- include('../../navbar') %>
+      <div class="container-fluid page-body-wrapper">
+        <%- include('../../sidebar') %>
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="row">
+              <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="card">
+                          <div class="card-header">
+                            <div class="d-flex justify-content-between">
+                              <h3 class="card-title">Exclusive Details</h3>
+                              <div class="d-flex justify-content-between">
+                                <a
+                                  href="/exclusive-create"
+                                  class="btn btn-primary btn-sm mr-2"
+                                  >Add new</a
+                                >
+                              </div>
+                            </div>
+                          </div>
+                          <div class="card-body">
+                            <div
+                              id="tb1_wrapper"
+                              class="dataTables_wrapper dt-bootstrap4"
+                            >
+                              <div class="row">
+                                <div class="col-sm-12">
+                                  <table
+                                    id="tb1"
+                                    class="table table-bordered table-striped dataTable dtr-inline"
+                                    role="grid"
+                                    aria-describedby="tb1_info"
+                                  >
+                                    <thead>
+                                      <tr role="row">
+                                        <th
+                                          class="sorting_asc"
+                                          tabindex="0"
+                                          aria-controls="tb1"
+                                          rowspan="1"
+                                          colspan="1"
+                                          aria-label="#: activate to sort column descending"
+                                          aria-sort="ascending"
+                                        >
+                                          #
+                                        </th>
+                                        <th
+                                          class="sorting"
+                                          tabindex="0"
+                                          aria-controls="tb1"
+                                          rowspan="1"
+                                          colspan="1"
+                                          aria-label="Name: activate to sort column ascending"
+                                        >
+                                          Image
+                                        </th>
+
+                                        <th
+                                          class="sorting"
+                                          tabindex="0"
+                                          aria-controls="tb1"
+                                          rowspan="1"
+                                          colspan="1"
+                                          aria-label="Content: activate to sort column ascending"
+                                        >
+                                          Address
+                                        </th>
+                                        <th
+                                          class="sorting"
+                                          tabindex="0"
+                                          aria-controls="tb1"
+                                          rowspan="1"
+                                          colspan="1"
+                                          aria-label="Designation: activate to sort column ascending"
+                                        >
+                                          Price
+                                        </th>
+                                        <th
+                                          class="sorting"
+                                          tabindex="0"
+                                          aria-controls="tb1"
+                                          rowspan="1"
+                                          colspan="1"
+                                          aria-label="Action: activate to sort column ascending"
+                                        >
+                                          Bed
+                                        </th>
+                                        <th
+                                          class="sorting"
+                                          tabindex="0"
+                                          aria-controls="tb1"
+                                          rowspan="1"
+                                          colspan="1"
+                                          aria-label="Action: activate to sort column ascending"
+                                        >
+                                          Bath
+                                        </th>
+                                        <th
+                                          class="sorting"
+                                          tabindex="0"
+                                          aria-controls="tb1"
+                                          rowspan="1"
+                                          colspan="1"
+                                          aria-label="Action: activate to sort column ascending"
+                                        >
+                                          Area
+                                        </th>
+                                        <th
+                                          class="sorting"
+                                          tabindex="0"
+                                          aria-controls="tb1"
+                                          rowspan="1"
+                                          colspan="1"
+                                          aria-label="Action: activate to sort column ascending"
+                                        >
+                                          Action
+                                        </th>
+                                      </tr>
+                                    </thead>
+                                    <tbody id="propertysBody"></tbody>
+                                    <tfoot>
+                                      <tr>
+                                        <th rowspan="1" colspan="1">#</th>
+                                        <th rowspan="1" colspan="1">Image</th>
+                                        <th rowspan="1" colspan="1">Address</th>
+                                        <th rowspan="1" colspan="1">Price</th>
+                                        <th rowspan="1" colspan="1">Bed</th>
+
+                                        <th rowspan="1" colspan="1">Bath</th>
+
+                                        <th rowspan="1" colspan="1">Area</th>
+                                        <th rowspan="1" colspan="1">Action</th>
+                                      </tr>
+                                    </tfoot>
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <%- include('../../footer') %>
+        </div>
+      </div>
+    </div>
+    <%- include('../../foot') %>
+
+    <!-- Deelte Exclusive and Add Exclusive Listing -->
+    <script>
+      function deleteexclusive(propertyId, row) {
+        if (confirm("Are you sure you want to delete this exclusive ?")) {
+          $.ajax({
+            url: `https://api.maninderrealestate.com/api/admin/exclusive/delete/${propertyId}`,
+            type: "DELETE",
+            success: function (result) {
+              alert("Exclusive deleted successfully.");
+              row.remove();
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+              alert("Error deleting Exclusive.");
+            },
+          });
+        }
+      }
+      $(document).ready(function () {
+        $.get(
+          "https://api.maninderrealestate.com/api/exclusive-listing",
+          function (data) {
+            console.log(data);
+            if (data.data && data.data.length > 0) {
+              data.data.forEach(function (property, index) {
+                const createdAt = new Date(property.createdAt);
+                const formattedDate = `${createdAt.getDate()} ${getMonthName(
+                  createdAt.getMonth()
+                )} ${createdAt.getFullYear()}`;
+                $("#propertysBody").append(`
+                        <tr>
+                            <td>${index + 1}</td>
+                            <td>
+                                <a href="${
+                                  "https://api.maninderrealestate.com/uploads/" +
+                                  property.exclusive_image
+                                }" target="_blank">
+                                    <img src="https://api.maninderrealestate.com/uploads/${
+                                      property.exclusive_image
+                                    }" alt="Property Image" style="max-width: 100px !important; max-height: 100px !important; border-radius : none !important;">
+                                </a>
+                            </td>
+                            <td>${property.exclusive_address}</td>
+                            <td>${property.exclusive_price}</td>
+                            <td>${property.exclusive_bedroom}</td>
+                            <td>${property.exclusive_bathroom}</td>
+                            <td>${property.exclusive_area}</td>
+                            <td>
+                                <a href="#" onclick="deleteexclusive('${
+                                  property._id
+                                }', $(this).closest('tr')); return false;"><i class="fa fa-trash"></i></a>
+                            </td>
+                        </tr>
+                    `);
+              });
+              $("#tb1").DataTable();
+            } else {
+              console.log("No data found");
+            }
+          }
+        );
+      });
+
+      function getMonthName(monthIndex) {
+        const months = [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December",
+        ];
+        return months[monthIndex];
+      }
+    </script>
+  </body>
+</html>

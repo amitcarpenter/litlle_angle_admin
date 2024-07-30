@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../../header', { title: 'Create Teacher' }) %>
+  <body>
+    <div class="container-scroller">
+      <!-- partial:partials/_navbar.html -->
+      <%- include('../../navbar') %>
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_settings-panel.html -->
+        <%- include('../../sidebar') %>
+        <!-- partial -->
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="row">
+              <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <p class="card-title">Add New Teacher</p>
+                    <form id="teacherForm" enctype="multipart/form-data">
+                      <div class="row">
+                        <div class="col-6">
+                          <div class="form-group">
+                            <label for="teacher_name" class="control-label">Name</label>
+                            <input
+                              type="text"
+                              id="teacher_name"
+                              name="teacher_name"
+                              required="required"
+                              class="form-control"
+                            />
+                          </div>
+                        </div>
+
+                        <div class="col-6">
+                          <div class="form-group">
+                            <label for="teacher_designation">Designation</label>
+                            <input
+                              type="text"
+                              id="teacher_designation"
+                              name="teacher_designation"
+                              required="required"
+                              class="form-control"
+                            />
+                          </div>
+                        </div>
+
+                        <div class="col-6">
+                          <div class="form-group">
+                            <label for="instagram">Instagram</label>
+                            <input
+                              type="text"
+                              id="instagram"
+                              name="instagram"
+                              class="form-control"
+                            />
+                          </div>
+                        </div>
+
+                        <div class="col-6">
+                          <div class="form-group">
+                            <label for="twitter">Twitter</label>
+                            <input
+                              type="text"
+                              id="twitter"
+                              name="twitter"
+                              class="form-control"
+                            />
+                          </div>
+                        </div>
+
+                        <div class="col-6">
+                          <div class="form-group">
+                            <label for="facebook">Facebook</label>
+                            <input
+                              type="text"
+                              id="facebook"
+                              name="facebook"
+                              class="form-control"
+                            />
+                          </div>
+                        </div>
+
+                        <div class="col-12">
+                          <div class="form-group">
+                            <label for="teacher_profile_image" class="control-label">Profile Image</label>
+                            <input
+                              type="file"
+                              id="teacher_profile_image"
+                              name="teacher_profile_image"
+                              required="required"
+                              class="form-control"
+                            />
+                          </div>
+                        </div>
+
+                        <div class="col-12">
+                          <div class="form-group">
+                            <div class="d-flex justify-content-between">
+                              <button type="submit" class="btn btn-primary">
+                                Add Teacher
+                              </button>
+                              <a href="/teachers" class="btn btn-danger">Cancel</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <%- include('../../footer') %>
+        </div>
+      </div>
+    </div>
+    <%- include('../../foot') %>
+    <!-- Load the full version of jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Teacher Create -->
+    <script>
+      $(document).ready(function () {
+        $("#teacherForm").submit(function (e) {
+          e.preventDefault();
+
+          var formData = new FormData(this);
+
+          $.ajax({
+            url: "/api/teacher-create",
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+              alert("Teacher added successfully");
+              window.location.href = "/teachers";
+            },
+            error: function (xhr, status, error) {
+              console.error("Error adding teacher:", error);
+              alert("Failed to add teacher. Please try again later.");
+            },
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../../header', { title: 'Teachers List' }) %>
+
+  <body>
+    <div class="container-scroller">
+      <%- include('../../navbar') %>
+      <div class="container-fluid page-body-wrapper">
+        <%- include('../../sidebar') %>
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="row">
+              <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="card">
+                          <div class="card-header">
+                            <div class="d-flex justify-content-between">
+                              <h3 class="card-title">Teachers Details</h3>
+                              <div class="d-flex justify-content-between">
+                                <a
+                                  href="/teacher-create"
+                                  class="btn btn-primary btn-sm mr-2"
+                                  >Add new</a
+                                >
+                              </div>
+                            </div>
+                          </div>
+                          <div class="card-body">
+                            <div
+                              id="tb1_wrapper"
+                              class="dataTables_wrapper dt-bootstrap4"
+                            >
+                              <div class="row">
+                                <div class="col-sm-12">
+                                  <table
+                                    id="tb1"
+                                    class="table table-bordered table-striped dataTable dtr-inline"
+                                    role="grid"
+                                    aria-describedby="tb1_info"
+                                  >
+                                    <thead>
+                                      <tr role="row">
+                                        <th
+                                          class="sorting_asc"
+                                          tabindex="0"
+                                          aria-controls="tb1"
+                                          rowspan="1"
+                                          colspan="1"
+                                          aria-label="#: activate to sort column descending"
+                                          aria-sort="ascending"
+                                        >
+                                          #
+                                        </th>
+                                        <th
+                                          class="sorting"
+                                          tabindex="0"
+                                          aria-controls="tb1"
+                                          rowspan="1"
+                                          colspan="1"
+                                          aria-label="Profile Image: activate to sort column ascending"
+                                        >
+                                          Profile Image
+                                        </th>
+                                        <th
+                                          class="sorting"
+                                          tabindex="0"
+                                          aria-controls="tb1"
+                                          rowspan="1"
+                                          colspan="1"
+                                          aria-label="Name: activate to sort column ascending"
+                                        >
+                                          Name
+                                        </th>
+                                        <th
+                                          class="sorting"
+                                          tabindex="0"
+                                          aria-controls="tb1"
+                                          rowspan="1"
+                                          colspan="1"
+                                          aria-label="Designation: activate to sort column ascending"
+                                        >
+                                          Designation
+                                        </th>
+                                        <th
+                                          class="sorting"
+                                          tabindex="0"
+                                          aria-controls="tb1"
+                                          rowspan="1"
+                                          colspan="1"
+                                          aria-label="Instagram: activate to sort column ascending"
+                                        >
+                                          Instagram
+                                        </th>
+                                        <th
+                                          class="sorting"
+                                          tabindex="0"
+                                          aria-controls="tb1"
+                                          rowspan="1"
+                                          colspan="1"
+                                          aria-label="Twitter: activate to sort column ascending"
+                                        >
+                                          Twitter
+                                        </th>
+                                        <th
+                                          class="sorting"
+                                          tabindex="0"
+                                          aria-controls="tb1"
+                                          rowspan="1"
+                                          colspan="1"
+                                          aria-label="Facebook: activate to sort column ascending"
+                                        >
+                                          Facebook
+                                        </th>
+                                        <th
+                                          class="sorting"
+                                          tabindex="0"
+                                          aria-controls="tb1"
+                                          rowspan="1"
+                                          colspan="1"
+                                          aria-label="Action: activate to sort column ascending"
+                                        >
+                                          Action
+                                        </th>
+                                      </tr>
+                                    </thead>
+                                    <tbody id="teachersBody"></tbody>
+                                    <tfoot>
+                                      <tr>
+                                        <th rowspan="1" colspan="1">#</th>
+                                        <th rowspan="1" colspan="1">Profile Image</th>
+                                        <th rowspan="1" colspan="1">Name</th>
+                                        <th rowspan="1" colspan="1">Designation</th>
+                                        <th rowspan="1" colspan="1">Instagram</th>
+                                        <th rowspan="1" colspan="1">Twitter</th>
+                                        <th rowspan="1" colspan="1">Facebook</th>
+                                        <th rowspan="1" colspan="1">Action</th>
+                                      </tr>
+                                    </tfoot>
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <%- include('../../footer') %>
+        </div>
+      </div>
+    </div>
+    <%- include('../../foot') %>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Teachers Listing -->
+    <script>
+      function deleteTeacher(teacherId, row) {
+        if (confirm("Are you sure you want to delete this teacher?")) {
+          $.ajax({
+            url: `/api/teachers/${teacherId}`,
+            type: "DELETE",
+            success: function (result) {
+              alert("Teacher deleted successfully.");
+              // Remove the corresponding row from the table
+              row.remove();
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+              alert("Error deleting teacher.");
+            },
+          });
+        }
+      }
+
+      $(document).ready(function () {
+        // Fetch data from the API
+        $.get("/api/teachers/all", function (data) {
+          if (data.data && data.data.length > 0) {
+            data.data.forEach(function (teacher, index) {
+              $("#teachersBody").append(`
+                <tr>
+                  <td>${index + 1}</td>
+                  <td><img src="${teacher.teacher_profile_image}" alt="Teacher Image" style="max-width: 100px; max-height: 100px;"></td>
+                  <td>${teacher.teacher_name}</td>
+                  <td>${teacher.teacher_designation}</td>
+                  <td>${teacher.instagram || 'N/A'}</td>
+                  <td>${teacher.twitter || 'N/A'}</td>
+                  <td>${teacher.facebook || 'N/A'}</td>
+                  <td>
+                    <a href="#" onclick="deleteTeacher('${teacher._id}', $(this).closest('tr')); return false;"><i class="fa fa-trash"></i></a>
+                  </td>
+                </tr>
+              `);
+            });
+            $("#tb1").DataTable();
+          } else {
+            console.log("No data found");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

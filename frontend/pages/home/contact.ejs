@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../../header', { title: 'Express with EJS' }) %>
+
+<body>
+    <div class="container-scroller">
+        <%- include('../../navbar') %>
+        <div class="container-fluid page-body-wrapper">
+            <%- include('../../sidebar') %>
+            <div class="main-panel">
+                <div class="content-wrapper">
+                    <div class="row">
+                        <div class="col-md-12 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body">
+                                    <p class="card-title">
+                                        <%= contactDetails ? 'Update Contact Details' : 'Add New Contact Details' %>
+                                    </p>
+                                    <form id="contactDetailsForm" enctype="multipart/form-data">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="address" class="control-label">Address</label>
+                                                    <input type="text" id="address" name="address"
+                                                        required="required" class="form-control"
+                                                        value="<%= contactDetails ? contactDetails.address : '' %>" />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="mobile_number">Mobile Number</label>
+                                                    <input type="text" id="mobile_number" name="mobile_number"
+                                                        required="required" class="form-control"
+                                                        value="<%= contactDetails ? contactDetails.mobile_number : '' %>" />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="email">Email</label>
+                                                    <input type="email" id="email" name="email"
+                                                        required="required" class="form-control"
+                                                        value="<%= contactDetails ? contactDetails.email : '' %>" />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <div class="d-flex justify-content-between">
+                                                        <button type="submit" class="btn btn-primary">
+                                                            <%= contactDetails ? 'Update Contact Details' : 'Add Contact Details' %>
+                                                        </button>
+                                                        <a href="/contact" class="btn btn-danger">Cancel</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <%- include('../../footer') %>
+            </div>
+        </div>
+    </div>
+    <%- include('../../foot') %>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#contactDetailsForm").submit(function (e) {
+                e.preventDefault();
+
+                var formData = new FormData(this);
+
+                console.log('FormData Entries:');
+                for (var pair of formData.entries()) {
+                    console.log(pair[0] + ', ' + pair[1]);
+                }
+
+                var actionUrl = "<%= contactDetails ? '/api/contact-details/create' : '/api/contact-details/create' %>";
+                var method = "POST";
+
+                $.ajax({
+                    url: actionUrl,
+                    type: method,
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        alert("<%= contactDetails ? 'Contact details updated successfully' : 'Contact details added successfully' %>");
+                        window.location.href = "/contact";
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error processing request:", error);
+                        alert("<%= contactDetails ? 'Failed to update contact details. Please try again later.' : 'Failed to add contact details. Please try again later.' %>");
+                    },
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

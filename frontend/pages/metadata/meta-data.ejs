@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../../header', { title: 'Express with EJS' }) %>
+  <link
+    href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css"
+    rel="stylesheet"
+  />
+  <link
+    rel="stylesheet"
+    href="https://malikfarhan.com/plugins/icheck-bootstrap/icheck-bootstrap.min.css"
+  />
+  <link
+    rel="stylesheet"
+    href="https://malikfarhan.com/plugins/summernote/summernote-bs4.css"
+  />
+
+  <body>
+    <div class="container-scroller">
+      <!-- partial:partials/_navbar.html -->
+      <%- include('../../navbar') %>
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_settings-panel.html -->
+
+        <%- include('../../sidebar') %>
+        <!-- partial -->
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="row">
+              <div class="col-md-12 grid-margin stretch-card">
+                <div class="card card-primary">
+                  <div class="card-header">
+                    <h3 class="card-title">Meta Data</h3>
+                  </div>
+                  <div class="card-body">
+                    <div
+                      class="row"
+                      style="justify-content: center; margin: auto"
+                    >
+                      <div class="col-6">
+                        <div class="form-group">
+                          <label for="page_name" class="control-label"
+                            >Page</label
+                          >
+                          <select
+                            id="page_name"
+                            name="page_name"
+                            required="required"
+                            class="form-control"
+                          >
+                            <option value="">--select--</option>
+                            <option value="About Us">About Us</option>
+                            <option value="cmhc calculator">
+                              cmhc calculator
+                            </option>
+                            <option value="Commercial">Commercial</option>
+                            <option value="Condo">Condo</option>
+                            <option value="Featured">Featured</option>
+                            <option value="Home">Home</option>
+                            <option value="Land transfer tax calculator">
+                              Land transfer tax calculator
+                            </option>
+                            <option value="map-search">map-search</option>
+                            <option value="Mortgage Calculator">
+                              Mortgage Calculator
+                            </option>
+                            <option value="Neighbourhood Alert">
+                              Neighbourhood Alert
+                            </option>
+                            <option value="New Listing Alert">
+                              New Listing Alert
+                            </option>
+                            <option value="pre_construction">
+                              pre_construction
+                            </option>
+                            <option value="Residential">Residential</option>
+                            <option value="Sold Listing">Sold Listing</option>
+                            <option value="Contact Us">Contact Us</option>
+                            <option value="Home Worth">Home Worth</option>
+                            <option value="Mortgage Affordability Calculator">
+                              Mortgage Affordability Calculator
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <form
+                      method="POST"
+                      action="https://malikfarhan.com/admin/meta-data/update"
+                    >
+                      <input
+                        type="hidden"
+                        name="_token"
+                        value="s2xkDRF2aFvYtroHhqFpXr1BVJtxkDItuFDNjU1V"
+                      />
+                      <div
+                        id="metadata"
+                        class="row"
+                        style="justify-content: center; margin: auto"
+                      >
+                        <input
+                          type="hidden"
+                          name="id"
+                          id="page_id"
+                          value="13"
+                        />
+                        <div class="col-12">
+                          <div class="form-group">
+                            <label for="title" class="control-label"
+                              >Title</label
+                            >
+                            <input
+                              type="text"
+                              id="title"
+                              name="title"
+                              value=""
+                              maxlength="60"
+                              class="form-control"
+                            />
+                            <div id="title-count"></div>
+                          </div>
+                        </div>
+                        <div class="col-12">
+                          <div class="form-group">
+                            <label for="description" class="control-label"
+                              >Description</label
+                            >
+                            <textarea
+                              id="description"
+                              name="description"
+                              maxlength="160"
+                              class="form-control"
+                            ></textarea>
+                            <div id="des-count"></div>
+                          </div>
+                        </div>
+                        <div class="col-12">
+                          <div class="form-group">
+                            <label for="keyword" class="control-label"
+                              >Keyword</label
+                            >
+                            <textarea
+                              id="keyword"
+                              name="keyword"
+                              required="required"
+                              class="form-control"
+                            ></textarea>
+                            <div id="key-count"></div>
+                          </div>
+                        </div>
+                        <div class="col-9">
+                          <div class="form-group">
+                            <div class="d-flex justify-content-between">
+                              <button
+                                type="submit"
+                                id="submit"
+                                class="btn btn-primary"
+                              >
+                                Save
+                              </button>
+                              <a href="" class="btn btn-danger">Cancel</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <%- include('../../footer') %>
+        </div>
+      </div>
+    </div>
+    <%- include('../../foot') %>
+    <script src="https://malikfarhan.com/plugins/summernote/summernote-bs4.min.js"></script>
+    <script>
+      $(function () {
+        // Summernote
+        $(".textarea").summernote({
+          height: 300,
+        });
+      });
+    </script>
+
+    <script>
+      $(function () {
+        // Summernote
+        $(".textarea").summernote({
+          height: 300,
+        });
+      });
+      $("#meta_title").keydown(function () {
+        var count = this.value.length;
+        $("#meta-count").html("(" + count + "/" + "60" + ")");
+      });
+      $("#description").keydown(function () {
+        var count = this.value.length;
+        $("#des-count").html("(" + count + "/" + "160" + ")");
+      });
+      $("#title").keydown(function () {
+        var count = this.value.length;
+
+        $("#title-count").html("(" + count + "/" + "60" + ")");
+      });
+    </script>
+  </body>
+</html>

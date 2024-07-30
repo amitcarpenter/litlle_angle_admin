@@ -1,0 +1,2534 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../../header', { title: 'Express with EJS' }) %>
+
+  <link
+    href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css"
+    rel="stylesheet"
+  />
+  <link
+    rel="stylesheet"
+    href="https://malikfarhan.com/plugins/icheck-bootstrap/icheck-bootstrap.min.css"
+  />
+  <link
+    rel="stylesheet"
+    href="https://malikfarhan.com/plugins/summernote/summernote-bs4.css"
+  />
+  <body>
+    <div class="container-scroller">
+      <!-- partial:partials/_navbar.html -->
+      <%- include('../../navbar') %>
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_settings-panel.html -->
+
+        <%- include('../../sidebar') %>
+        <!-- partial -->
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="row">
+              <div class="col-md-12 grid-margin stretch-card">
+                <div class="card card-primary">
+                  <div class="card-header">
+                    <h3 class="card-title">Details</h3>
+                  </div>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <div class="card">
+                          <div class="card-header p-2">
+                            <ul class="nav nav-pills">
+                              <li class="nav-item">
+                                <a
+                                  href="#basic"
+                                  data-toggle="tab"
+                                  id="myTab"
+                                  class="nav-link active btn btn-primary"
+                                  >Basic Information</a
+                                >
+                              </li>
+                              <li class="nav-item">
+                                <a
+                                  href="#details"
+                                  data-toggle="tab"
+                                  class="nav-link details d-none"
+                                  >Details</a
+                                >
+                              </li>
+                              <li class="nav-item">
+                                <a
+                                  href="#rooms"
+                                  data-toggle="tab"
+                                  class="nav-link rooms d-none"
+                                  >Rooms</a
+                                >
+                              </li>
+                              <li class="nav-item">
+                                <a
+                                  href="#features"
+                                  data-toggle="tab"
+                                  class="nav-link features d-none"
+                                  >Property Fetaures</a
+                                >
+                              </li>
+                              <li class="nav-item">
+                                <a
+                                  href="#gallery"
+                                  data-toggle="tab"
+                                  class="nav-link gallery d-none"
+                                  >Gallery</a
+                                >
+                              </li>
+                            </ul>
+                          </div>
+                          <div class="card-body">
+                            <div class="tab-content">
+                              <div id="basic" class="tab-pane active">
+                                <form
+                                  method="POST"
+                                  action="https://malikfarhan.com/admin/custom-property"
+                                  id="basic_form"
+                                >
+                                  <input
+                                    type="hidden"
+                                    name="_token"
+                                    value="h6PUPgG3T6ZZPnV7B9uhC8NyrUu8qB765RoJ10Ul"
+                                  />
+                                  <div class="post">
+                                    <div class="row">
+                                      <div class="col-4">
+                                        <div class="form-group">
+                                          <label
+                                            for="prop_type"
+                                            class="control-label"
+                                            >Property Type
+                                            <span style="color: red"
+                                              >*</span
+                                            ></label
+                                          >
+                                          <select
+                                            type="text"
+                                            id="prop_type"
+                                            name="prop_type"
+                                            required="required"
+                                            class="form-control"
+                                          >
+                                            <option value="">--select--</option>
+                                            <option value="Residential">
+                                              Residential
+                                            </option>
+                                            <option value="Condo">Condo</option>
+                                            <option value="Commercial">
+                                              Commercial
+                                            </option>
+                                          </select>
+                                          <label
+                                            id="prop_type_l"
+                                            class="d-none"
+                                            style="color: red"
+                                            ><small
+                                              >Please select type of
+                                              property</small
+                                            ></label
+                                          >
+                                        </div>
+                                      </div>
+                                      <div class="col-4">
+                                        <div class="form-group">
+                                          <label
+                                            for="addr"
+                                            class="control-label"
+                                            >Address
+                                            <span style="color: red"
+                                              >*</span
+                                            ></label
+                                          >
+                                          <input
+                                            type="text"
+                                            id="address"
+                                            name="addr"
+                                            required="required"
+                                            value=""
+                                            class="form-control pac-target-input"
+                                            placeholder="Enter a location"
+                                            autocomplete="off"
+                                          />
+                                          <label
+                                            id="address_l"
+                                            class="d-none"
+                                            style="color: red"
+                                            ><small
+                                              >Please enter your address</small
+                                            ></label
+                                          >
+                                        </div>
+                                        <input
+                                          type="hidden"
+                                          id="full_address"
+                                          name="full_address"
+                                        />
+                                        <input
+                                          type="hidden"
+                                          id="lat"
+                                          name="lat"
+                                        />
+                                        <input
+                                          type="hidden"
+                                          id="long"
+                                          name="long"
+                                        />
+                                      </div>
+                                      <div class="col-4">
+                                        <div class="form-group">
+                                          <label
+                                            for="cross_street"
+                                            class="control-label"
+                                            >Directions/Cross Streets</label
+                                          >
+                                          <input
+                                            type="text"
+                                            id="cross_street"
+                                            name="cross_street"
+                                            class="form-control"
+                                          />
+                                        </div>
+                                      </div>
+                                      <div class="col-4">
+                                        <div class="form-group">
+                                          <label
+                                            for="city"
+                                            class="control-label"
+                                            >City
+                                            <span style="color: red"
+                                              >*</span
+                                            ></label
+                                          >
+                                          <input
+                                            type="text"
+                                            id="city"
+                                            name="city"
+                                            class="form-control"
+                                          />
+                                          <label
+                                            id="city_l"
+                                            class="d-none"
+                                            style="color: red"
+                                            ><small
+                                              >Please enter your city</small
+                                            ></label
+                                          >
+                                        </div>
+                                      </div>
+                                      <div class="col-4">
+                                        <div class="form-group">
+                                          <label
+                                            for="province"
+                                            class="control-label"
+                                            >Province
+                                            <span style="color: red"
+                                              >*</span
+                                            ></label
+                                          >
+                                          <input
+                                            type="text"
+                                            id="province"
+                                            name="province"
+                                            required="required"
+                                            value=""
+                                            class="form-control"
+                                          />
+                                          <label
+                                            id="province_l"
+                                            class="d-none"
+                                            style="color: red"
+                                            ><small
+                                              >Please enter your province</small
+                                            ></label
+                                          >
+                                        </div>
+                                      </div>
+                                      <div class="col-4">
+                                        <div class="form-group">
+                                          <label for="zip" class="control-label"
+                                            >Zip
+                                            <span style="color: red"
+                                              >*</span
+                                            ></label
+                                          >
+                                          <input
+                                            type="text"
+                                            id="zip"
+                                            name="zip"
+                                            class="form-control"
+                                          />
+                                          <label
+                                            id="zip_l"
+                                            class="d-none"
+                                            style="color: red"
+                                            ><small
+                                              >Please enter your zip code</small
+                                            ></label
+                                          >
+                                        </div>
+                                      </div>
+                                      <div class="col-4">
+                                        <div class="form-group">
+                                          <label for="area">Area</label>
+                                          <input
+                                            type="text"
+                                            id="area"
+                                            name="area"
+                                            value=""
+                                            required="required"
+                                            class="form-control"
+                                          />
+                                        </div>
+                                      </div>
+                                      <div class="col-4">
+                                        <div class="form-group">
+                                          <label
+                                            for="community"
+                                            class="control-label"
+                                            >Community
+                                            <span style="color: red"
+                                              >*</span
+                                            ></label
+                                          >
+                                          <input
+                                            type="text"
+                                            id="community"
+                                            name="community"
+                                            class="form-control"
+                                          />
+                                          <label
+                                            id="community_l"
+                                            class="d-none"
+                                            style="color: red"
+                                            ><small
+                                              >Please enter your
+                                              community</small
+                                            ></label
+                                          >
+                                        </div>
+                                      </div>
+                                      <div class="col-4">
+                                        <div class="form-group">
+                                          <label for="bed" class="control-label"
+                                            >No of Bedrooms
+                                            <small
+                                              >(Please enter integer
+                                              value)</small
+                                            ></label
+                                          >
+                                          <input
+                                            type="number"
+                                            id="bed"
+                                            name="bed"
+                                            class="form-control"
+                                          />
+                                        </div>
+                                      </div>
+                                      <div class="col-4">
+                                        <div class="form-group">
+                                          <label
+                                            for="bed_plus"
+                                            class="control-label"
+                                            >No of Bedroom plus
+                                            <small
+                                              >(Please enter integer
+                                              value)</small
+                                            ></label
+                                          >
+                                          <input
+                                            type="number"
+                                            id="bed_plus"
+                                            name="bed_plus"
+                                            class="form-control"
+                                          />
+                                        </div>
+                                      </div>
+                                      <div class="col-4">
+                                        <div class="form-group">
+                                          <label
+                                            for="bath"
+                                            class="control-label"
+                                            >No of Bathrooms
+                                            <small
+                                              >(Please enter integer
+                                              value)</small
+                                            ></label
+                                          >
+                                          <input
+                                            type="number"
+                                            id="bath"
+                                            name="bath"
+                                            class="form-control"
+                                          />
+                                        </div>
+                                      </div>
+                                      <div class="col-4">
+                                        <div class="form-group">
+                                          <label
+                                            for="listed_price"
+                                            class="control-label"
+                                            >List price
+                                            <small
+                                              >(Please enter integer value) </small
+                                            ><span style="color: red"
+                                              >*</span
+                                            ></label
+                                          >
+                                          <input
+                                            type="number"
+                                            id="listed_price"
+                                            name="listed_price"
+                                            class="form-control"
+                                          />
+                                        </div>
+                                        <label
+                                          id="listed_price_l"
+                                          class="d-none"
+                                          style="color: red"
+                                          ><small
+                                            >Please enter listing price</small
+                                          ></label
+                                        >
+                                      </div>
+                                      <div class="col-4">
+                                        <div class="form-group">
+                                          <label
+                                            for="sqft"
+                                            class="control-label"
+                                            >Approx Square footage</label
+                                          >
+                                          <input
+                                            type="text"
+                                            id="sqft"
+                                            name="sqft"
+                                            class="form-control"
+                                          />
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="col-12">
+                                    <div class="form-group">
+                                      <div
+                                        class="d-flex justify-content-between"
+                                      >
+                                        <button
+                                          type="submit"
+                                          id="submitbasic"
+                                          class="btn btn-primary"
+                                        >
+                                          Save &amp; Continue
+                                        </button>
+                                        <a href="" class="btn btn-danger"
+                                          >Cancel</a
+                                        >
+                                      </div>
+                                    </div>
+                                  </div>
+                                </form>
+                              </div>
+                              <div id="details" class="tab-pane">
+                                <form
+                                  method="POST"
+                                  action="https://malikfarhan.com/admin/custom-property"
+                                  id="deatils-form"
+                                >
+                                  <input
+                                    type="hidden"
+                                    name="_token"
+                                    value="h6PUPgG3T6ZZPnV7B9uhC8NyrUu8qB765RoJ10Ul"
+                                  />
+                                  <div class="post">
+                                    <div class="row">
+                                      <div class="col-4">
+                                        <div class="form-group">
+                                          <label
+                                            for="sale_lease"
+                                            class="control-label"
+                                            >Listing Type
+                                            <span style="color: red"
+                                              >*</span
+                                            ></label
+                                          >
+                                          <select
+                                            id="sale_lease"
+                                            name="sale_lease"
+                                            autofocus="autofocus"
+                                            class="form-control"
+                                          >
+                                            <option value="">--select--</option>
+                                            <option value="sale">Sale</option>
+                                            <option value="lease">Lease</option>
+                                          </select>
+                                          <label
+                                            id="sale_lease_l"
+                                            class="d-none"
+                                            style="color: red"
+                                            ><small
+                                              >Please select listing type
+                                            </small></label
+                                          >
+                                        </div>
+                                      </div>
+                                      <div class="col-4">
+                                        <div class="form-group">
+                                          <label
+                                            for="building_style"
+                                            class="control-label"
+                                            >Building Style</label
+                                          >
+                                          <select
+                                            id="building_style"
+                                            name="building_style"
+                                            class="form-control select2bs4 select2-hidden-accessible"
+                                            data-select2-id="building_style"
+                                            style="width: 100%"
+                                            tabindex="-1"
+                                            aria-hidden="true"
+                                          >
+                                            <option
+                                              value=""
+                                              data-select2-id="2"
+                                            >
+                                              --select--
+                                            </option>
+                                            <option value="1 1/2 Storey">
+                                              1 1/2 Storey
+                                            </option>
+                                            <option value="2 1/2 Storey">
+                                              2 1/2 Storey
+                                            </option>
+                                            <option value="2-Storey">
+                                              2-Storey
+                                            </option>
+                                            <option value="3-Storey">
+                                              3-Storey
+                                            </option>
+                                            <option value="Apartment">
+                                              Apartment
+                                            </option>
+                                            <option value="Bachelor/Studio">
+                                              Bachelor/Studio
+                                            </option>
+                                            <option value="Backsplit 3">
+                                              Backsplit 3
+                                            </option>
+                                            <option value="Backsplit 4">
+                                              Backsplit 4
+                                            </option>
+                                            <option value="Backsplit 5">
+                                              Backsplit 5
+                                            </option>
+                                            <option value="Bungalow">
+                                              Bungalow
+                                            </option>
+                                            <option value="Bungalow-Raised">
+                                              Bungalow-Raised
+                                            </option>
+                                            <option value="Bungaloft">
+                                              Bungaloft
+                                            </option>
+                                            <option value="Industrial Loft">
+                                              Industrial Loft
+                                            </option>
+                                            <option value="Loft">Loft</option>
+                                            <option value="Multi-Level">
+                                              Multi-Level
+                                            </option>
+                                            <option value="Sidesplit 3">
+                                              Sidesplit 3
+                                            </option>
+                                            <option value="Sidesplit 4">
+                                              Sidesplit 4
+                                            </option>
+                                            <option value="Sidesplit 5">
+                                              Sidesplit 5
+                                            </option>
+                                            <option value="Stacked Townhse">
+                                              Stacked Townhse
+                                            </option>
+                                            <option value="Warehouse Loft">
+                                              Warehouse Loft
+                                            </option>
+                                            <option value="Other">
+                                              Other
+                                            </option></select
+                                          ><span
+                                            class="select2 select2-container select2-container--bootstrap4"
+                                            dir="ltr"
+                                            data-select2-id="1"
+                                            style="width: 100%"
+                                            ><span class="selection"
+                                              ><span
+                                                class="select2-selection select2-selection--single"
+                                                role="combobox"
+                                                aria-haspopup="true"
+                                                aria-expanded="false"
+                                                tabindex="0"
+                                                aria-disabled="false"
+                                                aria-labelledby="select2-building_style-container"
+                                                ><span
+                                                  class="select2-selection__rendered"
+                                                  id="select2-building_style-container"
+                                                  role="textbox"
+                                                  aria-readonly="true"
+                                                  title="--select--"
+                                                  >--select--</span
+                                                ><span
+                                                  class="select2-selection__arrow"
+                                                  role="presentation"
+                                                  ><b
+                                                    role="presentation"
+                                                  ></b></span></span></span
+                                            ><span
+                                              class="dropdown-wrapper"
+                                              aria-hidden="true"
+                                            ></span
+                                          ></span>
+                                        </div>
+                                      </div>
+                                      <div class="col-4">
+                                        <div class="form-group">
+                                          <label
+                                            for="building_type"
+                                            class="control-label"
+                                            >Building Type</label
+                                          >
+                                          <select
+                                            id="building_type"
+                                            name="building_type"
+                                            class="form-control select2bs4 select2-hidden-accessible"
+                                            data-select2-id="building_type"
+                                            style="width: 100%"
+                                            tabindex="-1"
+                                            aria-hidden="true"
+                                          >
+                                            <option
+                                              value=""
+                                              data-select2-id="4"
+                                            >
+                                              --select--
+                                            </option>
+                                            <option value="Apartment">
+                                              Apartment
+                                            </option>
+                                            <option value="Att/Row/Twnhouse">
+                                              Att/Row/Twnhouse
+                                            </option>
+                                            <option value="Co-Op Apt">
+                                              Co-Op Apt
+                                            </option>
+                                            <option value="Co-Ownership Apt">
+                                              Co-Ownership Apt
+                                            </option>
+                                            <option value="Commercial/Retail">
+                                              Commercial/Retail
+                                            </option>
+                                            <option value="Comm Element Condo">
+                                              Comm Element Condo
+                                            </option>
+                                            <option value="Condo Apt">
+                                              Condo Apt
+                                            </option>
+                                            <option value="Condo Townhouse">
+                                              Condo Townhouse
+                                            </option>
+                                            <option value="Cottage">
+                                              Cottage
+                                            </option>
+                                            <option value="Detached">
+                                              Detached
+                                            </option>
+                                            <option value="Det Condo">
+                                              Det Condo
+                                            </option>
+                                            <option value="Duplex">
+                                              Duplex
+                                            </option>
+                                            <option value="Farm">Farm</option>
+                                            <option value="Fourplex">
+                                              Fourplex
+                                            </option>
+                                            <option value="Industrial">
+                                              Industrial
+                                            </option>
+                                            <option value="Investment">
+                                              Investment
+                                            </option>
+                                            <option value="Leasehold Condo">
+                                              Leasehold Condo
+                                            </option>
+                                            <option value="Link">Link</option>
+                                            <option value="Locker">
+                                              Locker
+                                            </option>
+                                            <option value="Lower Level">
+                                              Lower Level
+                                            </option>
+                                            <option value="Mobile/Trailer">
+                                              Mobile/Trailer
+                                            </option>
+                                            <option value="Multiplex">
+                                              Multiplex
+                                            </option>
+                                            <option value="Office">
+                                              Office
+                                            </option>
+                                            <option value="Parking Space">
+                                              Parking Space
+                                            </option>
+                                            <option value="Phased Condo">
+                                              Phased Condo
+                                            </option>
+                                            <option value="Room">Room</option>
+                                            <option value="Rural Resid">
+                                              Rural Resid
+                                            </option>
+                                            <option value="Semi-Det Condo">
+                                              Semi-Det Condo
+                                            </option>
+                                            <option value="Semi-Detached">
+                                              Semi-Detached
+                                            </option>
+                                            <option value="Shared Room">
+                                              Shared Room
+                                            </option>
+                                            <option value="Store W/Apt/Offc">
+                                              Store W/Apt/Offc
+                                            </option>
+                                            <option value="Time Share">
+                                              Time Share
+                                            </option>
+                                            <option value="Triplex">
+                                              Triplex
+                                            </option>
+                                            <option value="Upper Level">
+                                              Upper Level
+                                            </option>
+                                            <option value="Upper Level">
+                                              Upper Level
+                                            </option>
+                                            <option value="Vacant Land">
+                                              Vacant Land
+                                            </option>
+                                            <option value="Vacant Land Condo">
+                                              Vacant Land Condo
+                                            </option>
+                                            <option value="Other">Other</option>
+                                            <option value="None">
+                                              None
+                                            </option></select
+                                          ><span
+                                            class="select2 select2-container select2-container--bootstrap4"
+                                            dir="ltr"
+                                            data-select2-id="3"
+                                            style="width: 100%"
+                                            ><span class="selection"
+                                              ><span
+                                                class="select2-selection select2-selection--single"
+                                                role="combobox"
+                                                aria-haspopup="true"
+                                                aria-expanded="false"
+                                                tabindex="0"
+                                                aria-disabled="false"
+                                                aria-labelledby="select2-building_type-container"
+                                                ><span
+                                                  class="select2-selection__rendered"
+                                                  id="select2-building_type-container"
+                                                  role="textbox"
+                                                  aria-readonly="true"
+                                                  title="--select--"
+                                                  >--select--</span
+                                                ><span
+                                                  class="select2-selection__arrow"
+                                                  role="presentation"
+                                                  ><b
+                                                    role="presentation"
+                                                  ></b></span></span></span
+                                            ><span
+                                              class="dropdown-wrapper"
+                                              aria-hidden="true"
+                                            ></span
+                                          ></span>
+                                        </div>
+                                      </div>
+                                      <div class="col-4">
+                                        <div class="form-group">
+                                          <label
+                                            for="heat_type"
+                                            class="control-label"
+                                            >Heating</label
+                                          >
+                                          <select
+                                            id="heat_type"
+                                            name="heat_type"
+                                            class="form-control select2bs4 select2-hidden-accessible"
+                                            data-select2-id="heat_type"
+                                            style="width: 100%"
+                                            tabindex="-1"
+                                            aria-hidden="true"
+                                          >
+                                            <option
+                                              value=""
+                                              data-select2-id="6"
+                                            >
+                                              --select--
+                                            </option>
+                                            <option value="Baseboard">
+                                              Baseboard
+                                            </option>
+                                            <option value="Elec Forced Air">
+                                              Elec Forced Air
+                                            </option>
+                                            <option value="Fan Coil">
+                                              Fan Coil
+                                            </option>
+                                            <option value="Forced Air">
+                                              Forced Air
+                                            </option>
+                                            <option value="Heat Pump">
+                                              Heat Pump
+                                            </option>
+                                            <option value="Heat Type">
+                                              Heat Type
+                                            </option>
+                                            <option value="Radiant">
+                                              Radiant
+                                            </option>
+                                            <option value="Water">Water</option>
+                                            <option value="Woodburning">
+                                              Woodburning
+                                            </option>
+                                            <option value="Other">Other</option>
+                                            <option value="None">
+                                              None
+                                            </option></select
+                                          ><span
+                                            class="select2 select2-container select2-container--bootstrap4"
+                                            dir="ltr"
+                                            data-select2-id="5"
+                                            style="width: 100%"
+                                            ><span class="selection"
+                                              ><span
+                                                class="select2-selection select2-selection--single"
+                                                role="combobox"
+                                                aria-haspopup="true"
+                                                aria-expanded="false"
+                                                tabindex="0"
+                                                aria-disabled="false"
+                                                aria-labelledby="select2-heat_type-container"
+                                                ><span
+                                                  class="select2-selection__rendered"
+                                                  id="select2-heat_type-container"
+                                                  role="textbox"
+                                                  aria-readonly="true"
+                                                  title="--select--"
+                                                  >--select--</span
+                                                ><span
+                                                  class="select2-selection__arrow"
+                                                  role="presentation"
+                                                  ><b
+                                                    role="presentation"
+                                                  ></b></span></span></span
+                                            ><span
+                                              class="dropdown-wrapper"
+                                              aria-hidden="true"
+                                            ></span
+                                          ></span>
+                                        </div>
+                                      </div>
+                                      <div class="col-4">
+                                        <div class="form-group">
+                                          <label
+                                            for="garage_type"
+                                            class="control-label"
+                                            >Garage Type</label
+                                          >
+                                          <select
+                                            id="garage_type"
+                                            name="garage_type"
+                                            class="form-control select2bs4 select2-hidden-accessible"
+                                            data-select2-id="garage_type"
+                                            style="width: 100%"
+                                            tabindex="-1"
+                                            aria-hidden="true"
+                                          >
+                                            <option
+                                              value=""
+                                              data-select2-id="8"
+                                            >
+                                              --select--
+                                            </option>
+                                            <option value="Attached">
+                                              Attached
+                                            </option>
+                                            <option value="Built-In">
+                                              Built-In
+                                            </option>
+                                            <option value="Carport">
+                                              Carport
+                                            </option>
+                                            <option value="Detached">
+                                              Detached
+                                            </option>
+                                            <option value="In/Out">
+                                              In/Out
+                                            </option>
+                                            <option value="Surface">
+                                              Surface
+                                            </option>
+                                            <option value="Outside/Surface">
+                                              Outside/Surface
+                                            </option>
+                                            <option value="Plaza">Plaza</option>
+                                            <option value="Public">
+                                              Public
+                                            </option>
+                                            <option value="Reserved/Assignd">
+                                              Reserved/Assignd
+                                            </option>
+                                            <option value="Underground">
+                                              Underground
+                                            </option>
+                                            <option value="Visitor">
+                                              Visitor
+                                            </option>
+                                            <option value="Other">Other</option>
+                                            <option value="None">
+                                              None
+                                            </option></select
+                                          ><span
+                                            class="select2 select2-container select2-container--bootstrap4"
+                                            dir="ltr"
+                                            data-select2-id="7"
+                                            style="width: 100%"
+                                            ><span class="selection"
+                                              ><span
+                                                class="select2-selection select2-selection--single"
+                                                role="combobox"
+                                                aria-haspopup="true"
+                                                aria-expanded="false"
+                                                tabindex="0"
+                                                aria-disabled="false"
+                                                aria-labelledby="select2-garage_type-container"
+                                                ><span
+                                                  class="select2-selection__rendered"
+                                                  id="select2-garage_type-container"
+                                                  role="textbox"
+                                                  aria-readonly="true"
+                                                  title="--select--"
+                                                  >--select--</span
+                                                ><span
+                                                  class="select2-selection__arrow"
+                                                  role="presentation"
+                                                  ><b
+                                                    role="presentation"
+                                                  ></b></span></span></span
+                                            ><span
+                                              class="dropdown-wrapper"
+                                              aria-hidden="true"
+                                            ></span
+                                          ></span>
+                                        </div>
+                                      </div>
+                                      <div class="col-4">
+                                        <div class="form-group">
+                                          <label
+                                            for="sewer"
+                                            class="control-label"
+                                            >Sewers</label
+                                          >
+                                          <select
+                                            id="sewer"
+                                            name="sewer"
+                                            class="form-control"
+                                          >
+                                            <option value="">--select--</option>
+                                            <option value="Septic">
+                                              Septic
+                                            </option>
+                                            <option value="Sewers">
+                                              Sewers
+                                            </option>
+                                            <option value="Tank">Tank</option>
+                                            <option value="None">None</option>
+                                            <option value="Other">Other</option>
+                                          </select>
+                                        </div>
+                                      </div>
+                                      <div class="col-4">
+                                        <div class="form-group">
+                                          <label
+                                            for="laundry"
+                                            class="control-label"
+                                            >Laundry</label
+                                          >
+                                          <select
+                                            id="laundry"
+                                            name="laundry"
+                                            class="form-control"
+                                          >
+                                            <option value="">--select--</option>
+                                            <option value="Coin Operated">
+                                              Coin Operated
+                                            </option>
+                                            <option value="Ensuite">
+                                              Ensuite
+                                            </option>
+                                            <option value="Set Usage">
+                                              Set Usage
+                                            </option>
+                                            <option value="Shared">
+                                              Shared
+                                            </option>
+                                            <option value="In Area">
+                                              In Area
+                                            </option>
+                                            <option value="Laundry Access">
+                                              Laundry Access
+                                            </option>
+                                            <option value="None">None</option>
+                                          </select>
+                                        </div>
+                                      </div>
+                                      <div class="col-4">
+                                        <div class="form-group">
+                                          <label
+                                            for="lot_depth"
+                                            class="control-label"
+                                            >Depth<small
+                                              >(Please enter integer
+                                              value)</small
+                                            ></label
+                                          >
+                                          <input
+                                            type="number"
+                                            id="lot_depth"
+                                            name="lot_depth"
+                                            class="form-control"
+                                          />
+                                        </div>
+                                      </div>
+                                      <div class="col-4">
+                                        <div class="form-group">
+                                          <label
+                                            for="fire_place"
+                                            class="control-label"
+                                            >Fire Place</label
+                                          >
+                                          <input
+                                            type="text"
+                                            id="fire_place"
+                                            name="fire_place"
+                                            class="form-control"
+                                          />
+                                        </div>
+                                      </div>
+                                      <div class="col-4">
+                                        <div class="form-group">
+                                          <label
+                                            for="total_area"
+                                            class="control-label"
+                                            >Total Area</label
+                                          >
+                                          <input
+                                            type="text"
+                                            id="total_area"
+                                            name="total_area"
+                                            class="form-control"
+                                          />
+                                        </div>
+                                      </div>
+                                      <div class="col-4">
+                                        <div class="form-group">
+                                          <label
+                                            for="condo_corp"
+                                            class="control-label"
+                                            >Condo Registry office</label
+                                          >
+                                          <input
+                                            type="text"
+                                            id="condo_corp"
+                                            name="condo_corp"
+                                            class="form-control"
+                                          />
+                                        </div>
+                                      </div>
+                                      <div class="col-4">
+                                        <div class="form-group">
+                                          <label
+                                            for="exterior"
+                                            class="control-label"
+                                            >Exterior
+                                          </label>
+                                          <input
+                                            type="text"
+                                            id="exterior"
+                                            name="exterior"
+                                            class="form-control"
+                                          />
+                                        </div>
+                                      </div>
+                                      <div class="col-4">
+                                        <div class="form-group">
+                                          <label
+                                            for="heat_source"
+                                            class="control-label"
+                                            >Fuel</label
+                                          >
+                                          <select
+                                            id="heat_source"
+                                            name="heat_source"
+                                            class="form-control"
+                                          >
+                                            <option value="">--select--</option>
+                                            <option value="Electric">
+                                              Electric
+                                            </option>
+                                            <option value="Gas">Gas</option>
+                                            <option value="Grnd Srce">
+                                              Grnd Srce
+                                            </option>
+                                            <option value="Heat Source">
+                                              Heat Source
+                                            </option>
+                                            <option value="Oil">Oil</option>
+                                            <option value="Propane">
+                                              Propane
+                                            </option>
+                                            <option value="Solar">Solar</option>
+                                            <option value="Wood">Wood</option>
+                                            <option value="Other">Other</option>
+                                            <option value="NULL">NULL</option>
+                                          </select>
+                                        </div>
+                                      </div>
+                                      <div class="col-4">
+                                        <div class="form-group">
+                                          <label
+                                            for="furnished"
+                                            class="control-label"
+                                            >Furnished</label
+                                          >
+                                          <select
+                                            type="text"
+                                            id="furnished"
+                                            name="furnished"
+                                            class="form-control"
+                                          >
+                                            <option value="">--select--</option>
+                                            <option value="N">No</option>
+                                            <option value="Y">Yes</option>
+                                            <option value="Part">Part</option>
+                                            <option value="Furnished">
+                                              Furnished
+                                            </option>
+                                            <option value="NULL">Null</option>
+                                          </select>
+                                        </div>
+                                      </div>
+                                      <div class="col-4">
+                                        <div class="form-group">
+                                          <label
+                                            for="zoning"
+                                            class="control-label"
+                                            >Zoning</label
+                                          >
+                                          <input
+                                            type="text"
+                                            id="zoning"
+                                            name="zoning"
+                                            class="form-control"
+                                          />
+                                        </div>
+                                      </div>
+                                      <div class="col-4">
+                                        <div class="form-group">
+                                          <label
+                                            for="pets"
+                                            class="control-label"
+                                            >Pets</label
+                                          >
+                                          <select
+                                            id="pets"
+                                            name="pets"
+                                            class="form-control"
+                                          >
+                                            <option value="">--select--</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+                                            <option value="Restrict">
+                                              Restrict
+                                            </option>
+                                          </select>
+                                        </div>
+                                      </div>
+                                      <div class="col-4">
+                                        <div class="form-group">
+                                          <label
+                                            for="pool"
+                                            class="control-label"
+                                            >Pool</label
+                                          >
+                                          <select
+                                            id="pool"
+                                            name="pool"
+                                            class="form-control"
+                                          >
+                                            <option value="">--select--</option>
+                                            <option value="Inground">
+                                              Inground
+                                            </option>
+                                            <option value="Abv Grnd">
+                                              Abv Grnd
+                                            </option>
+                                            <option value="Indoor">
+                                              Indoor
+                                            </option>
+                                            <option value="Outdoor">
+                                              Outdoor
+                                            </option>
+                                            <option value="Both">Both</option>
+                                            <option value="None">None</option>
+                                          </select>
+                                        </div>
+                                      </div>
+                                      <div class="col-4">
+                                        <div class="form-group">
+                                          <label for="tax" class="control-label"
+                                            >Tax
+                                            <small
+                                              >(Please enter integer
+                                              value)</small
+                                            ></label
+                                          >
+                                          <input
+                                            type="text"
+                                            id="tax"
+                                            name="tax"
+                                            class="form-control"
+                                          />
+                                        </div>
+                                      </div>
+                                      <div class="col-4">
+                                        <div class="form-group">
+                                          <label
+                                            for="tax_year"
+                                            class="control-label"
+                                            >Tax Year</label
+                                          >
+                                          <input
+                                            type="text"
+                                            id="tax_year"
+                                            name="tax_year"
+                                            class="form-control"
+                                          />
+                                        </div>
+                                      </div>
+                                      <div class="col-4">
+                                        <div class="form-group">
+                                          <label
+                                            for="legal_desc"
+                                            class="control-label"
+                                            >Legal Description</label
+                                          >
+                                          <input
+                                            type="text"
+                                            id="legal_desc"
+                                            name="legal_desc"
+                                            class="form-control"
+                                          />
+                                        </div>
+                                      </div>
+                                      <div class="col-4">
+                                        <div class="form-group">
+                                          <label
+                                            for="virtual_tour_url"
+                                            class="control-label"
+                                            >Virtual Tour URL</label
+                                          >
+                                          <input
+                                            type="text"
+                                            id="virtual_tour_url"
+                                            name="virtual_tour_url"
+                                            class="form-control"
+                                          />
+                                        </div>
+                                      </div>
+                                      <div class="col-4">
+                                        <div class="form-group">
+                                          <label
+                                            for="kitchen"
+                                            class="control-label"
+                                            >No of Kitchen
+                                            <small
+                                              >(Please enter integer
+                                              value)</small
+                                            ></label
+                                          >
+                                          <input
+                                            type="text"
+                                            id="kitchen"
+                                            name="kitchen"
+                                            class="form-control"
+                                          />
+                                        </div>
+                                      </div>
+                                      <div class="col-4">
+                                        <div class="form-group">
+                                          <label
+                                            for="parking_space"
+                                            class="control-label"
+                                            >Parking Space
+                                            <small
+                                              >(Please enter integer
+                                              value)</small
+                                            ></label
+                                          >
+                                          <input
+                                            type="text"
+                                            id="parking_space"
+                                            name="parking_space"
+                                            class="form-control"
+                                          />
+                                        </div>
+                                      </div>
+                                      <div class="col-4">
+                                        <div class="form-group">
+                                          <label
+                                            for="basement"
+                                            class="control-label"
+                                            >Basement
+                                          </label>
+                                          <select
+                                            id="basement"
+                                            name="basement"
+                                            class="form-control select2bs4 select2-hidden-accessible"
+                                            data-select2-id="basement"
+                                            style="width: 100%"
+                                            tabindex="-1"
+                                            aria-hidden="true"
+                                          >
+                                            <option
+                                              value=""
+                                              data-select2-id="10"
+                                            >
+                                              --select--
+                                            </option>
+                                            <option value="Apartment">
+                                              Apartment
+                                            </option>
+                                            <option value="Basement1">
+                                              Basement1
+                                            </option>
+                                            <option value="Crawl Space">
+                                              Crawl Space
+                                            </option>
+                                            <option value="Finished">
+                                              Finished
+                                            </option>
+                                            <option value="Fin W/O">
+                                              Fin W/O
+                                            </option>
+                                            <option value="Full">Full</option>
+                                            <option value="Half">Half</option>
+                                            <option value="Part Fin">
+                                              Part Fin
+                                            </option>
+                                            <option value="Part Bsmt">
+                                              Part Bsmt
+                                            </option>
+                                            <option value="Sep Entrance">
+                                              Sep Entrance
+                                            </option>
+                                            <option value="Unfinished">
+                                              Unfinished
+                                            </option>
+                                            <option value="Walk-Up">
+                                              Walk-Up
+                                            </option>
+                                            <option value="W/O">W/O</option>
+                                            <option value="None">None</option>
+                                            <option value="Other">
+                                              Other
+                                            </option></select
+                                          ><span
+                                            class="select2 select2-container select2-container--bootstrap4"
+                                            dir="ltr"
+                                            data-select2-id="9"
+                                            style="width: 100%"
+                                            ><span class="selection"
+                                              ><span
+                                                class="select2-selection select2-selection--single"
+                                                role="combobox"
+                                                aria-haspopup="true"
+                                                aria-expanded="false"
+                                                tabindex="0"
+                                                aria-disabled="false"
+                                                aria-labelledby="select2-basement-container"
+                                                ><span
+                                                  class="select2-selection__rendered"
+                                                  id="select2-basement-container"
+                                                  role="textbox"
+                                                  aria-readonly="true"
+                                                  title="--select--"
+                                                  >--select--</span
+                                                ><span
+                                                  class="select2-selection__arrow"
+                                                  role="presentation"
+                                                  ><b
+                                                    role="presentation"
+                                                  ></b></span></span></span
+                                            ><span
+                                              class="dropdown-wrapper"
+                                              aria-hidden="true"
+                                            ></span
+                                          ></span>
+                                        </div>
+                                      </div>
+                                      <div class="col-4">
+                                        <div class="form-group">
+                                          <label
+                                            for="water"
+                                            class="control-label"
+                                            >Water</label
+                                          >
+                                          <select
+                                            type="text"
+                                            id="water"
+                                            name="water"
+                                            class="form-control"
+                                          >
+                                            <option value="">--select--</option>
+                                            <option value="Municipal">
+                                              Municipal
+                                            </option>
+                                            <option value="Well">Well</option>
+                                            <option value="Both">Both</option>
+                                            <option value="Other">Other</option>
+                                            <option value="None">None</option>
+                                          </select>
+                                        </div>
+                                      </div>
+                                      <div class="col-4">
+                                        <div class="form-group">
+                                          <label for="age" class="control-label"
+                                            >Age</label
+                                          >
+                                          <input
+                                            type="text"
+                                            id="age"
+                                            name="age"
+                                            class="form-control"
+                                          />
+                                        </div>
+                                      </div>
+                                      <div class="col-4">
+                                        <div class="form-group">
+                                          <label
+                                            for="utilities"
+                                            class="control-label"
+                                            >Utilities</label
+                                          >
+                                          <input
+                                            type="text"
+                                            id="utilities"
+                                            name="utilities"
+                                            class="form-control"
+                                          />
+                                        </div>
+                                      </div>
+                                      <div class="col-4">
+                                        <div class="form-group">
+                                          <label
+                                            for="extras"
+                                            class="control-label"
+                                            >Extras</label
+                                          >
+                                          <textarea
+                                            type="text"
+                                            id="extras"
+                                            name="extras"
+                                            class="form-control"
+                                          ></textarea>
+                                        </div>
+                                      </div>
+                                      <div class="col-4">
+                                        <div class="form-group">
+                                          <label
+                                            for="yes"
+                                            class="control-labels"
+                                            >Air Conditioning</label
+                                          >
+                                          <br />
+                                          <input
+                                            type="radio"
+                                            id="yes"
+                                            name="a_c"
+                                            value="yes"
+                                            class="largeradio a_c"
+                                          />
+                                          <label for="yes" class="mr-4"
+                                            >Yes</label
+                                          >
+                                          <input
+                                            type="radio"
+                                            id="no"
+                                            name="a_c "
+                                            value="no"
+                                            class="largeradio a_c"
+                                          />
+                                          <label for="no">No</label><br />
+                                        </div>
+                                      </div>
+                                      <div class="col-4">
+                                        <div class="form-group">
+                                          <label
+                                            for="elevator"
+                                            class="control-label"
+                                            >Elevator</label
+                                          ><br />
+                                          <input
+                                            type="radio"
+                                            id="elevator-yes"
+                                            name="elevator"
+                                            value="yes"
+                                            class="largeradio elevator"
+                                          />
+                                          <label for="elevator-yes" class="mr-4"
+                                            >Yes</label
+                                          >
+                                          <input
+                                            type="radio"
+                                            id="elevator-no"
+                                            name="elevator"
+                                            value="yes"
+                                            class="largeradio elevator"
+                                          />
+                                          <label for="elevator-no" class="mr-4"
+                                            >No</label
+                                          >
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="col-12">
+                                    <div class="form-group">
+                                      <div
+                                        class="d-flex justify-content-between"
+                                      >
+                                        <input
+                                          type="hidden"
+                                          name="property_id"
+                                          id="property_id"
+                                        />
+                                        <button
+                                          type="submit"
+                                          id="submitdetails"
+                                          class="btn btn-primary"
+                                        >
+                                          Save &amp; Continue
+                                        </button>
+                                        <a href="" class="btn btn-danger"
+                                          >Cancel</a
+                                        >
+                                      </div>
+                                    </div>
+                                  </div>
+                                </form>
+                              </div>
+                              <div id="rooms" class="tab-pane">
+                                <form
+                                  method="POST"
+                                  action="https://malikfarhan.com/admin/custom-property"
+                                  class="rooms_form"
+                                >
+                                  <input
+                                    type="hidden"
+                                    name="_token"
+                                    value="h6PUPgG3T6ZZPnV7B9uhC8NyrUu8qB765RoJ10Ul"
+                                  />
+                                  <div class="post">
+                                    <div class="row">
+                                      <div class="col-3">
+                                        <div class="form-group">
+                                          <label
+                                            for="room1"
+                                            class="control-label"
+                                            >Room 1</label
+                                          >
+                                          <select
+                                            id="room1"
+                                            name="room[0][name]"
+                                            class="form-control roomselect"
+                                            style="width: 100%"
+                                          >
+                                            <option value="">--select--</option>
+                                            <option value="Bathroom">
+                                              Bathroom
+                                            </option>
+                                            <option value="2nd Br">
+                                              2nd Br
+                                            </option>
+                                            <option value="3rd Br">
+                                              3rd Br
+                                            </option>
+                                            <option value="4th Br">
+                                              4th Br
+                                            </option>
+                                            <option value="5th Br">
+                                              5th Br
+                                            </option>
+                                            <option value="Br">Br</option>
+                                            <option value="Breakfast">
+                                              Breakfast
+                                            </option>
+                                            <option value="Common Rm">
+                                              Common Rm
+                                            </option>
+                                            <option value="Cold/Cant">
+                                              Cold/Cant
+                                            </option>
+                                            <option value="Den">Den</option>
+                                            <option value="Dining">
+                                              Dining
+                                            </option>
+                                            <option value="Exercise">
+                                              Exercise
+                                            </option>
+                                            <option value="Family">
+                                              Family
+                                            </option>
+                                            <option value="Foyer">Foyer</option>
+                                            <option value="Games">Games</option>
+                                            <option value="Great Rm">
+                                              Great Rm
+                                            </option>
+                                            <option value="Kitchen">
+                                              Kitchen
+                                            </option>
+                                            <option value="Laundry">
+                                              Laundry
+                                            </option>
+                                            <option value="Library">
+                                              Library
+                                            </option>
+                                            <option value="Living">
+                                              Living
+                                            </option>
+                                            <option value="Loft">Loft</option>
+                                            <option value="Media/Ent">
+                                              Media/Ent
+                                            </option>
+                                            <option value="Master">
+                                              Master
+                                            </option>
+                                            <option value="Mudroom">
+                                              Mudroom
+                                            </option>
+                                            <option value="Office">
+                                              Office
+                                            </option>
+                                            <option value="Powder Rm">
+                                              Powder Rm
+                                            </option>
+                                            <option value="Rec">Rec</option>
+                                            <option value="Study">Study</option>
+                                            <option value="Solarium">
+                                              Solarium
+                                            </option>
+                                            <option value="Sunroom">
+                                              Sunroom
+                                            </option>
+                                            <option value="Sitting">
+                                              Sitting
+                                            </option>
+                                            <option value="NULL">NULL</option>
+                                            <option value="Workshop">
+                                              Workshop
+                                            </option>
+                                            <option value="Room 1">
+                                              Room 1
+                                            </option>
+                                            <option value="Utility">
+                                              Utility
+                                            </option>
+                                            <option value="Other">Other</option>
+                                          </select>
+                                        </div>
+                                      </div>
+                                      <div class="col-3">
+                                        <div class="form-group">
+                                          <label
+                                            for="rm1_level"
+                                            class="control-label"
+                                            >Room 1 Level
+                                          </label>
+                                          <input
+                                            type="text"
+                                            id="rm1_level"
+                                            name="room[0][level]"
+                                            class="form-control roomlevel"
+                                          />
+                                        </div>
+                                      </div>
+                                      <div class="col-3">
+                                        <div class="form-group">
+                                          <label
+                                            for="rm1_dc1_out"
+                                            class="control-label"
+                                            >Room 1 Description 1</label
+                                          >
+                                          <input
+                                            type="text"
+                                            id="rm1_dc1_out"
+                                            name="room[0][description]"
+                                            class="form-control roomdesc"
+                                          />
+                                        </div>
+                                      </div>
+                                      <div class="col-3">
+                                        <div class="form-group">
+                                          <label
+                                            for="rm1_len"
+                                            class="control-label"
+                                            >Room 1 dimension</label
+                                          >
+                                          <input
+                                            type="text"
+                                            id="rm1_len"
+                                            name="room[0][diamension]"
+                                            class="form-control roomlen"
+                                          />
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <br />
+                                    <hr />
+                                    <br />
+                                    <div class="row">
+                                      <div class="col-3">
+                                        <div class="form-group">
+                                          <label
+                                            for="rm2_out"
+                                            class="control-label"
+                                            >Room 2</label
+                                          >
+                                          <select
+                                            id="rm2_out"
+                                            name="room[1][name]"
+                                            class="form-control roomselect"
+                                            style="width: 100%"
+                                          >
+                                            <option value="">--select--</option>
+                                            <option value="Bathroom">
+                                              Bathroom
+                                            </option>
+                                            <option value="2nd Br">
+                                              2nd Br
+                                            </option>
+                                            <option value="3rd Br">
+                                              3rd Br
+                                            </option>
+                                            <option value="4th Br">
+                                              4th Br
+                                            </option>
+                                            <option value="5th Br">
+                                              5th Br
+                                            </option>
+                                            <option value="Br">Br</option>
+                                            <option value="Breakfast">
+                                              Breakfast
+                                            </option>
+                                            <option value="Common Rm">
+                                              Common Rm
+                                            </option>
+                                            <option value="Cold/Cant">
+                                              Cold/Cant
+                                            </option>
+                                            <option value="Den">Den</option>
+                                            <option value="Dining">
+                                              Dining
+                                            </option>
+                                            <option value="Exercise">
+                                              Exercise
+                                            </option>
+                                            <option value="Family">
+                                              Family
+                                            </option>
+                                            <option value="Foyer">Foyer</option>
+                                            <option value="Games">Games</option>
+                                            <option value="Great Rm">
+                                              Great Rm
+                                            </option>
+                                            <option value="Kitchen">
+                                              Kitchen
+                                            </option>
+                                            <option value="Laundry">
+                                              Laundry
+                                            </option>
+                                            <option value="Library">
+                                              Library
+                                            </option>
+                                            <option value="Living">
+                                              Living
+                                            </option>
+                                            <option value="Loft">Loft</option>
+                                            <option value="Media/Ent">
+                                              Media/Ent
+                                            </option>
+                                            <option value="Master">
+                                              Master
+                                            </option>
+                                            <option value="Mudroom">
+                                              Mudroom
+                                            </option>
+                                            <option value="Office">
+                                              Office
+                                            </option>
+                                            <option value="Powder Rm">
+                                              Powder Rm
+                                            </option>
+                                            <option value="Rec">Rec</option>
+                                            <option value="Study">Study</option>
+                                            <option value="Solarium">
+                                              Solarium
+                                            </option>
+                                            <option value="Sunroom">
+                                              Sunroom
+                                            </option>
+                                            <option value="Sitting">
+                                              Sitting
+                                            </option>
+                                            <option value="NULL">NULL</option>
+                                            <option value="Workshop">
+                                              Workshop
+                                            </option>
+                                            <option value="Room 1">
+                                              Room 1
+                                            </option>
+                                            <option value="Utility">
+                                              Utility
+                                            </option>
+                                            <option value="Other">Other</option>
+                                          </select>
+                                        </div>
+                                      </div>
+                                      <div class="col-3">
+                                        <div class="form-group">
+                                          <label
+                                            for="rm2_level"
+                                            class="control-label"
+                                            >Room 2 Level
+                                          </label>
+                                          <input
+                                            type="text"
+                                            id="rm2_level"
+                                            name="room[1][level]"
+                                            class="form-control roomlevel"
+                                          />
+                                        </div>
+                                      </div>
+                                      <div class="col-3">
+                                        <div class="form-group">
+                                          <label
+                                            for="rm2_dc1_out"
+                                            class="control-label"
+                                            >Room 2 Description 1</label
+                                          >
+                                          <input
+                                            type="text"
+                                            id="rm2_dc1_out"
+                                            name="room[1][description]"
+                                            class="form-control roomdesc"
+                                          />
+                                        </div>
+                                      </div>
+                                      <div class="col-3">
+                                        <div class="form-group">
+                                          <label
+                                            for="rm2_len"
+                                            class="control-label"
+                                            >Room 2 Dimension</label
+                                          >
+                                          <input
+                                            type="text"
+                                            id="rm2_len"
+                                            name="room[1][diamension]"
+                                            class="form-control roomlen"
+                                          />
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <br />
+                                    <hr />
+                                    <br />
+                                    <div class="row">
+                                      <div class="col-3">
+                                        <div class="form-group">
+                                          <label
+                                            for="rm3_out"
+                                            class="control-label"
+                                            >Room 3</label
+                                          >
+                                          <select
+                                            id="rm3_out"
+                                            name="room[2][name]"
+                                            class="form-control roomselect"
+                                            style="width: 100%"
+                                          >
+                                            <option value="">--select--</option>
+                                            <option value="Bathroom">
+                                              Bathroom
+                                            </option>
+                                            <option value="2nd Br">
+                                              2nd Br
+                                            </option>
+                                            <option value="3rd Br">
+                                              3rd Br
+                                            </option>
+                                            <option value="4th Br">
+                                              4th Br
+                                            </option>
+                                            <option value="5th Br">
+                                              5th Br
+                                            </option>
+                                            <option value="Br">Br</option>
+                                            <option value="Breakfast">
+                                              Breakfast
+                                            </option>
+                                            <option value="Common Rm">
+                                              Common Rm
+                                            </option>
+                                            <option value="Cold/Cant">
+                                              Cold/Cant
+                                            </option>
+                                            <option value="Den">Den</option>
+                                            <option value="Dining">
+                                              Dining
+                                            </option>
+                                            <option value="Exercise">
+                                              Exercise
+                                            </option>
+                                            <option value="Family">
+                                              Family
+                                            </option>
+                                            <option value="Foyer">Foyer</option>
+                                            <option value="Games">Games</option>
+                                            <option value="Great Rm">
+                                              Great Rm
+                                            </option>
+                                            <option value="Kitchen">
+                                              Kitchen
+                                            </option>
+                                            <option value="Laundry">
+                                              Laundry
+                                            </option>
+                                            <option value="Library">
+                                              Library
+                                            </option>
+                                            <option value="Living">
+                                              Living
+                                            </option>
+                                            <option value="Loft">Loft</option>
+                                            <option value="Media/Ent">
+                                              Media/Ent
+                                            </option>
+                                            <option value="Master">
+                                              Master
+                                            </option>
+                                            <option value="Mudroom">
+                                              Mudroom
+                                            </option>
+                                            <option value="Office">
+                                              Office
+                                            </option>
+                                            <option value="Powder Rm">
+                                              Powder Rm
+                                            </option>
+                                            <option value="Rec">Rec</option>
+                                            <option value="Study">Study</option>
+                                            <option value="Solarium">
+                                              Solarium
+                                            </option>
+                                            <option value="Sunroom">
+                                              Sunroom
+                                            </option>
+                                            <option value="Sitting">
+                                              Sitting
+                                            </option>
+                                            <option value="NULL">NULL</option>
+                                            <option value="Workshop">
+                                              Workshop
+                                            </option>
+                                            <option value="Room 1">
+                                              Room 1
+                                            </option>
+                                            <option value="Utility">
+                                              Utility
+                                            </option>
+                                            <option value="Other">Other</option>
+                                          </select>
+                                        </div>
+                                      </div>
+                                      <div class="col-3">
+                                        <div class="form-group">
+                                          <label
+                                            for="rm3_level"
+                                            class="control-label"
+                                            >Room 3 Level</label
+                                          >
+                                          <input
+                                            type="text"
+                                            id="rm3_level"
+                                            name="room[2][level]"
+                                            class="form-control roomlevel"
+                                          />
+                                        </div>
+                                      </div>
+                                      <div class="col-3">
+                                        <div class="form-group">
+                                          <label
+                                            for="rm3_dc1_out"
+                                            class="control-label"
+                                            >Room 3 Description 1</label
+                                          >
+                                          <input
+                                            type="text"
+                                            id="rm3_dc1_out"
+                                            name="room[2][description]"
+                                            class="form-control roomdesc"
+                                          />
+                                        </div>
+                                      </div>
+                                      <div class="col-3">
+                                        <div class="form-group">
+                                          <label
+                                            for="rm3_len"
+                                            class="control-label"
+                                            >Room 3 Dimension
+                                          </label>
+                                          <input
+                                            type="text"
+                                            id="rm3_len"
+                                            name="room[2][diamension]"
+                                            class="form-control roomlen"
+                                          />
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <br />
+                                    <hr />
+                                    <br />
+                                    <div class="row">
+                                      <div class="col-3">
+                                        <div class="form-group">
+                                          <label
+                                            for="rm4_out"
+                                            class="control-label"
+                                            >Room 4</label
+                                          >
+                                          <select
+                                            id="rm4_out"
+                                            name="room[3][name]"
+                                            class="form-control roomselect"
+                                            style="width: 100%"
+                                          >
+                                            <option value="">--select--</option>
+                                            <option value="Bathroom">
+                                              Bathroom
+                                            </option>
+                                            <option value="2nd Br">
+                                              2nd Br
+                                            </option>
+                                            <option value="3rd Br">
+                                              3rd Br
+                                            </option>
+                                            <option value="4th Br">
+                                              4th Br
+                                            </option>
+                                            <option value="5th Br">
+                                              5th Br
+                                            </option>
+                                            <option value="Br">Br</option>
+                                            <option value="Breakfast">
+                                              Breakfast
+                                            </option>
+                                            <option value="Common Rm">
+                                              Common Rm
+                                            </option>
+                                            <option value="Cold/Cant">
+                                              Cold/Cant
+                                            </option>
+                                            <option value="Den">Den</option>
+                                            <option value="Dining">
+                                              Dining
+                                            </option>
+                                            <option value="Exercise">
+                                              Exercise
+                                            </option>
+                                            <option value="Family">
+                                              Family
+                                            </option>
+                                            <option value="Foyer">Foyer</option>
+                                            <option value="Games">Games</option>
+                                            <option value="Great Rm">
+                                              Great Rm
+                                            </option>
+                                            <option value="Kitchen">
+                                              Kitchen
+                                            </option>
+                                            <option value="Laundry">
+                                              Laundry
+                                            </option>
+                                            <option value="Library">
+                                              Library
+                                            </option>
+                                            <option value="Living">
+                                              Living
+                                            </option>
+                                            <option value="Loft">Loft</option>
+                                            <option value="Media/Ent">
+                                              Media/Ent
+                                            </option>
+                                            <option value="Master">
+                                              Master
+                                            </option>
+                                            <option value="Mudroom">
+                                              Mudroom
+                                            </option>
+                                            <option value="Office">
+                                              Office
+                                            </option>
+                                            <option value="Powder Rm">
+                                              Powder Rm
+                                            </option>
+                                            <option value="Rec">Rec</option>
+                                            <option value="Study">Study</option>
+                                            <option value="Solarium">
+                                              Solarium
+                                            </option>
+                                            <option value="Sunroom">
+                                              Sunroom
+                                            </option>
+                                            <option value="Sitting">
+                                              Sitting
+                                            </option>
+                                            <option value="NULL">NULL</option>
+                                            <option value="Workshop">
+                                              Workshop
+                                            </option>
+                                            <option value="Room 1">
+                                              Room 1
+                                            </option>
+                                            <option value="Utility">
+                                              Utility
+                                            </option>
+                                            <option value="Other">Other</option>
+                                          </select>
+                                        </div>
+                                      </div>
+                                      <div class="col-3">
+                                        <div class="form-group">
+                                          <label
+                                            for="rm4_level"
+                                            class="control-label"
+                                            >Room 4 Level
+                                          </label>
+                                          <input
+                                            type="text"
+                                            id="rm4_level"
+                                            name="room[3][level]"
+                                            class="form-control roomlevel"
+                                          />
+                                        </div>
+                                      </div>
+                                      <div class="col-3">
+                                        <div class="form-group">
+                                          <label
+                                            for="rm4_dc1_out"
+                                            class="control-label"
+                                            >Room 4 Description 1</label
+                                          >
+                                          <input
+                                            type="text"
+                                            id="rm4_dc1_out"
+                                            name="room[3][description]"
+                                            class="form-control roomdesc"
+                                          />
+                                        </div>
+                                      </div>
+                                      <div class="col-3">
+                                        <div class="form-group">
+                                          <label
+                                            for="rm4_len"
+                                            class="control-label"
+                                            >Room 4 Dimension</label
+                                          >
+                                          <input
+                                            type="text"
+                                            id="rm4_len"
+                                            name="room[3][diamension]"
+                                            class="form-control roomlen"
+                                          />
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <br />
+                                    <hr />
+                                    <br />
+                                    <div id="add-room"></div>
+                                    <input
+                                      type="hidden"
+                                      value="5"
+                                      id="counter"
+                                      name="counter"
+                                    />
+                                    <div
+                                      id="add"
+                                      class="col-8"
+                                      style="
+                                        padding-bottom: 10px;
+                                        justify-content: left;
+                                      "
+                                    >
+                                      <a href="" onclick="return addStep()"
+                                        ><i class="fa fa-plus fa-xs"></i> Add
+                                        room</a
+                                      >
+                                    </div>
+                                  </div>
+                                  <div class="col-12">
+                                    <div class="form-group">
+                                      <div
+                                        class="d-flex justify-content-between"
+                                      >
+                                        <input
+                                          type="hidden"
+                                          name="property_id"
+                                          id="property_id"
+                                        />
+                                        <button
+                                          type="submit"
+                                          id="submitrooms"
+                                          class="btn btn-primary"
+                                        >
+                                          Save &amp; Continue
+                                        </button>
+                                        <a href="" class="btn btn-danger"
+                                          >Cancel</a
+                                        >
+                                      </div>
+                                    </div>
+                                  </div>
+                                </form>
+                              </div>
+                              <div id="features" class="tab-pane">
+                                <form
+                                  method="POST"
+                                  action="https://malikfarhan.com/admin/custom-property"
+                                  class="features-form"
+                                >
+                                  <input
+                                    type="hidden"
+                                    name="_token"
+                                    value="h6PUPgG3T6ZZPnV7B9uhC8NyrUu8qB765RoJ10Ul"
+                                  />
+                                  <div class="post">
+                                    <div class="row">
+                                      <div class="col-6">
+                                        <div class="form-group">
+                                          <label
+                                            for="prop_feat1_out"
+                                            class="control-label"
+                                            >Property Features 1</label
+                                          >
+                                          <input
+                                            type="text"
+                                            id="prop_feat1_out"
+                                            name="feature[]"
+                                            autofocus="autofocus"
+                                            class="form-control"
+                                          />
+                                        </div>
+                                      </div>
+                                      <div class="col-6">
+                                        <div class="form-group">
+                                          <label
+                                            for="prop_feat2_out"
+                                            class="control-label"
+                                            >Property Features 2</label
+                                          >
+                                          <input
+                                            type="text"
+                                            id="prop_feat2_out"
+                                            name="feature[]"
+                                            class="form-control"
+                                          />
+                                        </div>
+                                      </div>
+                                      <div class="col-6">
+                                        <div class="form-group">
+                                          <label
+                                            for="prop_feat3_out"
+                                            class="control-label"
+                                            >Property Features 3</label
+                                          >
+                                          <input
+                                            type="text"
+                                            id="prop_feat3_out"
+                                            name="feature[]"
+                                            class="form-control"
+                                          />
+                                        </div>
+                                      </div>
+                                      <div class="col-6">
+                                        <div class="form-group">
+                                          <label
+                                            for="prop_feat4_out"
+                                            class="control-label"
+                                            >Property Features 4</label
+                                          >
+                                          <input
+                                            type="text"
+                                            id="prop_feat4_out"
+                                            name="feature[]"
+                                            class="form-control"
+                                          />
+                                        </div>
+                                      </div>
+                                      <div class="col-6">
+                                        <div class="form-group">
+                                          <label
+                                            for="prop_feat5_out"
+                                            class="control-label"
+                                            >Property Features 5</label
+                                          >
+                                          <input
+                                            type="text"
+                                            id="prop_feat5_out"
+                                            name="feature[]"
+                                            class="form-control"
+                                          />
+                                        </div>
+                                      </div>
+                                      <div class="col-6">
+                                        <div class="form-group">
+                                          <label
+                                            for="prop_feat6_out"
+                                            class="control-label"
+                                            >Property Features 6</label
+                                          >
+                                          <input
+                                            type="text"
+                                            id="prop_feat6_out"
+                                            name="feature[]"
+                                            class="form-control"
+                                          />
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="col-12">
+                                    <div class="form-group">
+                                      <div
+                                        class="d-flex justify-content-between"
+                                      >
+                                        <button
+                                          type="submit"
+                                          id="submitfeatures"
+                                          class="btn btn-primary"
+                                        >
+                                          Save &amp; Continue
+                                        </button>
+                                        <a href="" class="btn btn-danger"
+                                          >Cancel</a
+                                        >
+                                      </div>
+                                    </div>
+                                  </div>
+                                </form>
+                              </div>
+                              <div id="file_upload" class="tab-pane">
+                                <form
+                                  action="javascript:void(0)"
+                                  method="post"
+                                  enctype="multipart/form-data"
+                                  id="fileform"
+                                >
+                                  <input
+                                    type="hidden"
+                                    name="_token"
+                                    value="h6PUPgG3T6ZZPnV7B9uhC8NyrUu8qB765RoJ10Ul"
+                                  />
+                                  <div class="post">
+                                    <h4>File 1</h4>
+                                    <div class="row">
+                                      <div class="col-6">
+                                        <div class="form-group">
+                                          <label
+                                            for="file1_name"
+                                            class="control-label"
+                                          >
+                                            Name</label
+                                          >
+                                          <input
+                                            type="text"
+                                            id="file1_name"
+                                            name="file1_name"
+                                            class="form-control"
+                                          />
+                                        </div>
+                                      </div>
+                                      <div class="col-6">
+                                        <div class="form-group required">
+                                          <label
+                                            for="file1"
+                                            class="control-label"
+                                            >File</label
+                                          >
+                                          <div class="input-group">
+                                            <div class="custom-file">
+                                              <input
+                                                type="file"
+                                                id="file1"
+                                                name="file1"
+                                                class="custom-file-input"
+                                              />
+                                              <label
+                                                for="file1"
+                                                class="custom-file-label"
+                                                >Choose file</label
+                                              >
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div id="add-file"></div>
+                                    <input
+                                      type="hidden"
+                                      value="2"
+                                      id="count"
+                                      name="count"
+                                    />
+                                    <div
+                                      id="add-plus"
+                                      class="col-8"
+                                      style="
+                                        padding-bottom: 10px;
+                                        justify-content: left;
+                                      "
+                                    >
+                                      <a href="" onclick="return addFile()"
+                                        ><i class="fa fa-plus fa-xs"></i> Add
+                                        File</a
+                                      >
+                                    </div>
+                                  </div>
+                                  <div class="col-12">
+                                    <div class="form-group">
+                                      <div
+                                        class="d-flex justify-content-between"
+                                      >
+                                        <input
+                                          type="hidden"
+                                          name="property_id"
+                                          id="property_id"
+                                        />
+                                        <button
+                                          type="submit"
+                                          id="submitfiles"
+                                          class="btn btn-primary"
+                                        >
+                                          Save &amp; Continue
+                                        </button>
+                                        <a href="" class="btn btn-danger"
+                                          >Cancel</a
+                                        >
+                                      </div>
+                                    </div>
+                                  </div>
+                                </form>
+                              </div>
+                              <div id="gallery" class="tab-pane">
+                                <div class="post">
+                                  <div class="row">
+                                    <div class="col-12">
+                                      <div class="col-6">
+                                        <div class="form-group">
+                                          <input
+                                            type="hidden"
+                                            id="property_id"
+                                            name="property_id"
+                                            value=""
+                                            required="required"
+                                            class="form-control"
+                                          />
+                                        </div>
+                                      </div>
+                                      <div class="container mb-3">
+                                        <div
+                                          id="myDrop"
+                                          class="dropzone dz-clickable ui-sortable"
+                                        >
+                                          <div
+                                            data-dz-message=""
+                                            class="dz-default dz-message"
+                                          >
+                                            <span
+                                              >Drop files here to upload
+                                            </span>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="col-12">
+                                        <div class="form-group">
+                                          <div
+                                            class="d-flex justify-content-between"
+                                          >
+                                            <button
+                                              type="submit"
+                                              id="finish"
+                                              class="btn btn-primary"
+                                            >
+                                              Upload Images
+                                            </button>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <%- include('../../footer') %>
+        </div>
+      </div>
+    </div>
+    <%- include('../../foot') %>
+    <script src="https://malikfarhan.com/plugins/summernote/summernote-bs4.min.js"></script>
+    <script>
+      $(function () {
+        // Summernote
+        $(".textarea").summernote({
+          height: 300,
+        });
+      });
+    </script>
+  </body>
+</html>

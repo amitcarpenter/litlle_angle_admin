@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../../header', { title: 'Express with EJS' }) %>
+  <body>
+    <div class="container-scroller">
+      <%- include('../../navbar') %>
+      <div class="container-fluid page-body-wrapper">
+        <%- include('../../sidebar') %>
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="row">
+              <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="card">
+                          <div class="card-header">
+                            <div class="d-flex justify-content-between">
+                              <h3 class="card-title">Testimonials Details</h3>
+                              <div class="d-flex justify-content-between">
+                                <a
+                                  href="/testimonial-create"
+                                  class="btn btn-primary btn-sm mr-2"
+                                  >Add new</a
+                                >
+                              </div>
+                            </div>
+                          </div>
+                          <div class="card-body">
+                            <div
+                              id="tb1_wrapper"
+                              class="dataTables_wrapper dt-bootstrap4"
+                            >
+                              <div class="row">
+                                <div class="col-sm-12">
+                                  <table
+                                    id="tb1"
+                                    class="table table-bordered table-striped dataTable dtr-inline"
+                                    role="grid"
+                                    aria-describedby="tb1_info"
+                                  >
+                                    <thead>
+                                      <tr role="row">
+                                        <th
+                                          class="sorting_asc"
+                                          tabindex="0"
+                                          aria-controls="tb1"
+                                          rowspan="1"
+                                          colspan="1"
+                                          aria-label="#: activate to sort column descending"
+                                          aria-sort="ascending"
+                                        >
+                                          #
+                                        </th>
+                                        <th
+                                          class="sorting"
+                                          tabindex="0"
+                                          aria-controls="tb1"
+                                          rowspan="1"
+                                          colspan="1"
+                                          aria-label="Name: activate to sort column ascending"
+                                        >
+                                          Create At
+                                        </th>
+                                        <th
+                                          class="sorting"
+                                          tabindex="0"
+                                          aria-controls="tb1"
+                                          rowspan="1"
+                                          colspan="1"
+                                          aria-label="Name: activate to sort column ascending"
+                                        >
+                                          Name
+                                        </th>
+                                        <th
+                                          class="sorting"
+                                          tabindex="0"
+                                          aria-controls="tb1"
+                                          rowspan="1"
+                                          colspan="1"
+                                          aria-label="Content: activate to sort column ascending"
+                                        >
+                                          Message
+                                        </th>
+                                        <th
+                                          class="sorting"
+                                          tabindex="0"
+                                          aria-controls="tb1"
+                                          rowspan="1"
+                                          colspan="1"
+                                          aria-label="Designation: activate to sort column ascending"
+                                        >
+                                          Rating
+                                        </th>
+                                        <th
+                                          class="sorting"
+                                          tabindex="0"
+                                          aria-controls="tb1"
+                                          rowspan="1"
+                                          colspan="1"
+                                          aria-label="Action: activate to sort column ascending"
+                                        >
+                                          Action
+                                        </th>
+                                      </tr>
+                                    </thead>
+                                    <tbody id="testimonialsBody"></tbody>
+                                    <tfoot>
+                                      <tr>
+                                        <th rowspan="1" colspan="1">#</th>
+                                        <th rowspan="1" colspan="1">Name</th>
+                                        <th rowspan="1" colspan="1">
+                                          Create At
+                                        </th>
+                                        <th rowspan="1" colspan="1">Message</th>
+                                        <th rowspan="1" colspan="1">Rating</th>
+                                        <th rowspan="1" colspan="1">Action</th>
+                                      </tr>
+                                    </tfoot>
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <%- include('../../footer') %>
+        </div>
+      </div>
+    </div>
+    <%- include('../../foot') %>
+
+    <!-- Testimonial Listing -->
+    <script>
+      function deletetestimonial(testimonialId, row) {
+        if (confirm("Are you sure you want to delete this testimonial?")) {
+          $.ajax({
+            url: `https://api.maninderrealestate.com/api/admin/testimonials/delete/${testimonialId}`,
+            type: "DELETE",
+            success: function (result) {
+              alert("testimonial deleted successfully.");
+              // Remove the corresponding row from the table
+              row.remove();
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+              alert("Error deleting testimonial.");
+            },
+          });
+        }
+      }
+
+      $(document).ready(function () {
+        // Fetch data from the API
+        $.get(
+          "https://api.maninderrealestate.com/api/testimonials/all",
+          function (data) {
+            if (data.data && data.data.length > 0) {
+              data.data.forEach(function (testimonial, index) {
+                const createdAt = new Date(testimonial.createdAt);
+                const formattedDate = `${createdAt.getDate()} ${getMonthName(
+                  createdAt.getMonth()
+                )} ${createdAt.getFullYear()}`;
+                $("#testimonialsBody").append(`
+                      <tr>
+                          <td>${index + 1}</td>
+                          <td>${formattedDate}</td>
+                          <td>${testimonial.name}</td>
+                          <td class="message" style="max-height: 100px; max-width: 200px; overflow: auto; word-wrap: break-word;">${
+                            testimonial.message
+                          }</td>
+                          <td>${testimonial.rating}</td>
+                          <td>
+                              <a href="#" onclick="deletetestimonial('${
+                                testimonial._id
+                              }', $(this).closest('tr')); return false;"><i class="fa fa-trash"></i></a>
+                          </td>
+                      </tr>
+                  `);
+              });
+              $("#tb1").DataTable();
+            } else {
+              console.log("No data found");
+            }
+          }
+        );
+      });
+
+      function getMonthName(monthIndex) {
+        const months = [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December",
+        ];
+        return months[monthIndex];
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../../header', { title: 'Express with EJS' }) %>
+    <link rel="stylesheet" href="https://malikfarhan.com/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css" />
+    <link rel="stylesheet"
+        href="https://malikfarhan.com/plugins/datatables-responsive/css/responsive.bootstrap4.min.css" />
+
+    <body>
+        <div class="container-scroller">
+            <!-- partial:partials/_navbar.html -->
+            <%- include('../../navbar') %>
+                <!-- partial -->
+                <div class="container-fluid page-body-wrapper">
+                    <!-- partial:partials/_settings-panel.html -->
+
+                    <%- include('../../sidebar') %>
+                        <!-- partial -->
+                        <div class="main-panel">
+                            <div class="content-wrapper">
+                                <div class="row">
+                                    <div class="col-md-12 grid-margin stretch-card">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <div class="d-flex justify-content-between">
+                                                    <h3 class="card-title">Properties</h3>
+                                                    <div class="d-flex justify-content-between">
+                                                        <a href="/precondo-create" class="btn btn-primary btn-sm mr-2">Add Precondo</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <div id="result"></div>
+                                                <div class="card card-solid">
+                                                    <div class="card-body pb-0">
+                                                        <div id="padding-item-drop"
+                                                            class="row d-flex align-items-stretch connectedSortable ui-sortable">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <table id="tb1" class="table table-bordered table-striped">
+                                                    <thead>
+                                                        <tr></tr>
+                                                    </thead>
+                                                    <tbody id=""></tbody>
+                                                    <tfoot>
+                                                        <tr></tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <%- include('../../footer') %>
+                        </div>
+                </div>
+        </div>
+        <%- include('../../foot') %>
+            <script src="https://malikfarhan.com/plugins/datatables/jquery.dataTables.min.js"></script>
+            <script src="https://malikfarhan.com/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+            <script
+                src="https://malikfarhan.com/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+            <script
+                src="https://malikfarhan.com/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+            <script>
+                $(function () {
+                    var t = $("#tb1").DataTable({
+                        responsive: true,
+                        autoWidth: false,
+                        stateSave: true,
+                    });
+                    t.on("order.dt search.dt", function () {
+                        t.column(0, { search: "applied", order: "applied" })
+                            .nodes()
+                            .each(function (cell, i) {
+                                cell.innerHTML = i + 1;
+                            });
+                    }).draw();
+                });
+            </script>
+            <script>
+                function confirmation(i) {
+                    if (confirm("are you sure?")) {
+                        let form_name = "delete-form-" + i;
+                        document.getElementById(form_name).submit();
+                    } else {
+                        return false;
+                    }
+                }
+            </script>
+    </body>
+
+</html>

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../../header', { title: 'Express with EJS' }) %>
+  <body>
+    <div class="container-scroller">
+      <%- include('../../navbar') %>
+      <div class="container-fluid page-body-wrapper">
+        <%- include('../../sidebar') %>
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="row">
+              <div class="col-12">
+                <div class="card card-primary">
+                  <div class="card-header">
+                    <h3 class="card-title">Site Details</h3>
+                  </div>
+                  <form
+                    method="PUT"
+                    action="https://api.maninderrealestate.com/api/admin/settings/update/660932154f99745524b38908"
+                    id="settingsForm"
+                  >
+                    <!-- <input type="hidden" name="_token" value="" /> -->
+                    <div class="card-body">
+                      <div
+                        class="row"
+                        style="justify-content: center; margin: auto"
+                      >
+                        <div class="col-12">
+                          <div class="form-group">
+                            <label for="address" class="control-label"
+                              >Address</label
+                            >
+                            <input
+                              type="text"
+                              id="address"
+                              name="address"
+                              required="required"
+                              value=""
+                              class="form-control"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-4">
+                          <div class="form-group">
+                            <input
+                              type="hidden"
+                              name="id"
+                              id="site_id"
+                              value="1"
+                            />
+                            <label for="phone_1" class="control-label"
+                              >Phone Number 1</label
+                            >
+                            <input
+                              type="number"
+                              id="phoneNumber1"
+                              name="phoneNumber1"
+                              required="required"
+                              value=""
+                              data-inputmask='"mask": "(999) 999-9999"'
+                              data-mask=""
+                              class="form-control"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-4">
+                          <div class="form-group">
+                            <label for="phone_2" class="control-label"
+                              >Phone Number 2</label
+                            >
+                            <input
+                              type="number"
+                              id="phoneNumber2"
+                              name="phoneNumber2"
+                              value=""
+                              data-inputmask='"mask": "(999) 999-9999"'
+                              data-mask=""
+                              class="form-control"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-4">
+                          <div class="form-group">
+                            <label for="whatsapp" class="control-label"
+                              >Whatsapp</label
+                            >
+                            <input
+                              type="number"
+                              id="whatsapp"
+                              name="whatsapp"
+                              value=""
+                              data-inputmask='"mask": "(999) 999-9999"'
+                              data-mask=""
+                              class="form-control"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <div class="form-group">
+                            <label for="email_1" class="control-label"
+                              >Email 1</label
+                            >
+                            <input
+                              type="email"
+                              id="email1"
+                              name="email1"
+                              required="required"
+                              value=""
+                              class="form-control"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <div class="form-group">
+                            <label for="email_2" class="control-label"
+                              >Email 2</label
+                            >
+                            <input
+                              type="email"
+                              id="email2"
+                              name="email2"
+                              value=""
+                              class="form-control"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <div class="form-group">
+                            <label for="facebook" class="control-label"
+                              >Facebook</label
+                            >
+                            <input
+                              type="url"
+                              id="facebook"
+                              name="facebook"
+                              value="https://www.facebook.com/"
+                              class="form-control"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <div class="form-group">
+                            <label for="twitter" class="control-label"
+                              >Twitter</label
+                            >
+                            <input
+                              type="url"
+                              id="twitter"
+                              name="twitter"
+                              value="https://twitter.com/"
+                              class="form-control"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <div class="form-group">
+                            <label for="linkedin" class="control-label"
+                              >Linkedin</label
+                            >
+                            <input
+                              type="url"
+                              id="linkedin"
+                              name="linkedin"
+                              value="https://www.linkedin.com/"
+                              class="form-control"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <div class="form-group">
+                            <label for="instagram" class="control-label"
+                              >Instagram</label
+                            >
+                            <input
+                              type="url"
+                              id="instagram"
+                              name="instagram"
+                              value="https://www.instagram.com/"
+                              class="form-control"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <div class="form-group">
+                            <label for="tiktok" class="control-label"
+                              >Tiktok</label
+                            >
+                            <input
+                              type="url"
+                              id="tiktok"
+                              name="tiktok"
+                              value="https://www.tiktok.com/"
+                              class="form-control"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <div class="form-group">
+                            <label for="youtube" class="control-label"
+                              >Youtube</label
+                            >
+                            <input
+                              type="url"
+                              id="youtube"
+                              name="youtube"
+                              value="https://www.youtube.com/"
+                              class="form-control"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-6"></div>
+                        <div class="col-9">
+                          <div class="form-group">
+                            <div class="d-flex justify-content-between">
+                              <button
+                                type="submit"
+                                id="submit"
+                                class="btn btn-primary"
+                              >
+                                Save
+                              </button>
+                              <a href="" class="btn btn-danger">Cancel</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <%- include('../../footer') %>
+        </div>
+      </div>
+    </div>
+    <%- include('../../foot') %>
+
+    <!-- Update Setting Information -->
+    <script>
+      document
+        .getElementById("settingsForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          const formData = {
+            address: document.getElementById("address").value,
+            phoneNumber1: document.getElementById("phoneNumber1").value,
+            phoneNumber2: document.getElementById("phoneNumber2").value,
+            whatsapp: document.getElementById("whatsapp").value,
+            email1: document.getElementById("email1").value,
+            email2: document.getElementById("email2").value,
+            facebook: document.getElementById("facebook").value,
+            twitter: document.getElementById("twitter").value,
+            linkedin: document.getElementById("linkedin").value,
+            instagram: document.getElementById("instagram").value,
+            tiktok: document.getElementById("tiktok").value,
+            youtube: document.getElementById("youtube").value,
+          };
+
+          fetch(
+            "https://api.maninderrealestate.com/api/admin/settings/update/660932154f99745524b38908",
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(formData),
+            }
+          )
+            .then((response) => {
+              if (response.ok) {
+                return response.json();
+              } else {
+                throw new Error("Failed to update settings");
+              }
+            })
+            .then((data) => {
+              console.log("Settings updated successfully:", data);
+              window.location.href = "/setting";
+            })
+            .catch((error) => {
+              console.error("Error updating settings:", error);
+            });
+        });
+    </script>
+
+    <!-- Get Setting detials -->
+    <script>
+      function populateFormFields() {
+        fetch(
+          "https://api.maninderrealestate.com/api/admin/settings/660932154f99745524b38908"
+        )
+          .then((response) => response.json())
+          .then((half) => {
+            data = half.data;
+            document.getElementById("address").value = data.address;
+            document.getElementById("phoneNumber1").value = data.phoneNumber1;
+            document.getElementById("phoneNumber2").value = data.phoneNumber2;
+            document.getElementById("whatsapp").value = data.whatsapp;
+            document.getElementById("email1").value = data.email1;
+            document.getElementById("email2").value = data.email2;
+            document.getElementById("facebook").value = data.facebook;
+            document.getElementById("twitter").value = data.twitter;
+            document.getElementById("linkedin").value = data.linkedin;
+            document.getElementById("instagram").value = data.instagram;
+            document.getElementById("tiktok").value = data.tiktok;
+            document.getElementById("youtube").value = data.youtube;
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      }
+      window.addEventListener("load", populateFormFields);
+    </script>
+  </body>
+</html>
