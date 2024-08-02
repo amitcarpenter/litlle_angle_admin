@@ -15,7 +15,7 @@ const handleResponse = require('../utiles/responseHandler');
 
 const APP_URL = process.env.APP_URL
 
-
+// logo change controller
 async function logoController(req, res) {
     try {
         let logo = await Logo.findOne({});
@@ -29,6 +29,24 @@ async function logoController(req, res) {
         }
         const logoUpdate = await logo.save();
         return handleResponse(res, 200, true, 'Logo updated successfully', logoUpdate);
+    } catch (error) {
+        console.error("Error updating logo:", error);
+        return handleResponse(res, 500, false, 'An error occurred during logo update', error);
+    }
+}
+
+// get logo 
+async function getLogo(req, res) {
+    try {
+        let logo = await Logo.findOne({});
+        if (!logo) {
+            return handleResponse(res, 400, false, 'No Logo Found');
+        }
+        if (logo) {
+            logo.logo_image = APP_URL + logo.logo_image
+        }
+        console.log(logo)
+        return handleResponse(res, 200, true, 'Logo updated successfully', logo);
     } catch (error) {
         console.error("Error updating logo:", error);
         return handleResponse(res, 500, false, 'An error occurred during logo update', error);
@@ -369,4 +387,4 @@ async function createEnquiryController(req, res) {
     }
 }
 
-module.exports = { logoController, createFacilityController, getAllFacilities, deleteFacility, createOrUpdateAbout, getAbout, createTeacherController, deleteTeacher, getAllTeachers, createContactDetailsController, getAllEnquiry, createEnquiryController }
+module.exports = { getLogo, logoController, createFacilityController, getAllFacilities, deleteFacility, createOrUpdateAbout, getAbout, createTeacherController, deleteTeacher, getAllTeachers, createContactDetailsController, getAllEnquiry, createEnquiryController }
