@@ -3,6 +3,13 @@
   <%- include('../../header', { title: 'Teachers List' }) %>
 
   <body>
+
+    <style>
+      .button_color {
+        background-color: #4b49ac;
+        color: white;
+      }
+    </style>
     <div class="container-scroller">
       <%- include('../../navbar') %>
       <div class="container-fluid page-body-wrapper">
@@ -22,7 +29,7 @@
                               <div class="d-flex justify-content-between">
                                 <a
                                   href="/teacher-create"
-                                  class="btn btn-primary btn-sm mr-2"
+                                  class="btn btn-primary btn-sm mr-2 button_color"
                                   >Add new</a
                                 >
                               </div>

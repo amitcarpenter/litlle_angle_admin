@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <%- include('../../header', { title: 'Express with EJS' }) %>
-
+<style>
+    .button_color {
+      background-color: #4b49ac;
+      color: white;
+    }
+  </style>
 <body>
     <div class="container-scroller">
         <%- include('../../navbar') %>
@@ -48,7 +53,7 @@
                                             <div class="col-12">
                                                 <div class="form-group">
                                                     <div class="d-flex justify-content-between">
-                                                        <button type="submit" class="btn btn-primary">
+                                                        <button type="submit" class="btn btn-primary button_color">
                                                             <%= contactDetails ? 'Update Contact Details' : 'Add Contact Details' %>
                                                         </button>
                                                         <a href="/contact" class="btn btn-danger">Cancel</a>

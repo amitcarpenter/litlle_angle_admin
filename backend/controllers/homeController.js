@@ -35,7 +35,7 @@ async function logoController(req, res) {
     }
 }
 
-// get logo 
+// get logo Controller
 async function getLogo(req, res) {
     try {
         let logo = await Logo.findOne({});
@@ -53,6 +53,7 @@ async function getLogo(req, res) {
     }
 }
 
+// Create Facilities Controller
 async function createFacilityController(req, res) {
     try {
         const facilityValidationSchema = Joi.object({
@@ -121,7 +122,6 @@ const deleteFacility = async (req, res) => {
     }
 };
 
-
 // Create or update an About entry
 const createOrUpdateAbout = async (req, res) => {
     try {
@@ -149,7 +149,6 @@ const createOrUpdateAbout = async (req, res) => {
     }
 };
 
-
 // Get About entry
 const getAbout = async (req, res) => {
     try {
@@ -165,7 +164,7 @@ const getAbout = async (req, res) => {
     }
 };
 
-
+// Create Teacher Controller
 async function createTeacherController(req, res) {
     try {
         const teacherValidationSchema = Joi.object({
@@ -219,18 +218,24 @@ async function createTeacherController(req, res) {
     }
 }
 
-
 // Get all teachers
 const getAllTeachers = async (req, res) => {
     try {
         const teachers = await Teacher.find();
+        if (teachers) {
+            teachers.map((teacher) => {
+                if (teacher.teacher_profile_image) {
+                    return teacher.teacher_profile_image = APP_URL + teacher.teacher_profile_image
+                }
+            })
+        }
+
         return res.status(200).json({ success: true, data: teachers });
     } catch (error) {
         console.error("Error fetching teachers:", error);
         return res.status(500).json({ success: false, message: 'An error occurred while fetching teachers', error });
     }
 };
-
 
 // Delete a teacher
 const deleteTeacher = async (req, res) => {
@@ -255,6 +260,7 @@ const deleteTeacher = async (req, res) => {
     }
 };
 
+// Create Contact Details Controller
 async function createContactDetailsController(req, res) {
     try {
         const contactDetailsValidationSchema = Joi.object({
@@ -298,57 +304,61 @@ async function createContactDetailsController(req, res) {
     }
 }
 
+// Get ALl Contact Controller
+async function getContactDetails(req, res) {
+    try {
+        const contactDetails = await ContactDetails.findOne();
+        if (!contactDetails) {
+            return handleResponse(res, 404, false, 'Contact Details Not Found');
+        }
+        return handleResponse(res, 200, true, 'Contact details', contactDetails);
 
+    } catch (error) {
+        return handleResponse(res, 500, false, 'An error occurred while creating or updating contact details', error);
+
+    }
+}
+
+// get all Enquiries Controller
 const getAllEnquiry = async (req, res) => {
     try {
+        console.log("Enladkjalfdj")
         const Enquiries = await Enquiry.find({});
-        return res.status(200).json({ data: Enquiries });
+        if (!Enquiries) {
+            return handleResponse(res, 404, false, 'Not Found');
+        }
+        return handleResponse(res, 200, true, 'Enquiries ', Enquiries);
+
     } catch (error) {
         console.error("Error fetching Enquiries:", error);
         return res.status(500).json({ error: 'An error occurred while fetching Enquiries.' });
     }
 };
 
-
+// Create Enquiries Controller
 async function createEnquiryController(req, res) {
     try {
         const enquiryValidationSchema = Joi.object({
             academicYear: Joi.string().trim().required(),
-            selectedClass: Joi.string().valid(
-                'Class 1st', 'Class 2nd', 'Class 3rd', 'Class 4th', 'Class 5th',
-                'Class 6th', 'Class 7th', 'Class 8th', 'Class 9th', 'Class 10th',
-                'Class 11th', 'Class 12th'
-            ).required(),
+            selectedClass: Joi.string().required(),
             medium: Joi.string().valid('English', 'Hindi').required(),
             parentName: Joi.string().trim().required(),
             studentName: Joi.string().trim().required(),
             parentEmail: Joi.string().email().required(),
-            mobileNumber: Joi.string().pattern(/^[0-9]{10}$/).required(),
-            privacyPolicyAgreed: Joi.boolean().valid(true).required() // Ensure the checkbox is checked
+            mobileNumber: Joi.string().required(),
         });
 
         const { academicYear, selectedClass, medium, parentName, studentName, parentEmail, mobileNumber, privacyPolicyAgreed } = req.body;
 
-        console.log(req.body)
-
         // Validate the request body using Joi
-        const { error } = enquiryValidationSchema.validate({
-            academicYear,
-            selectedClass,
-            medium,
-            parentName,
-            studentName,
-            parentEmail,
-            mobileNumber,
-            privacyPolicyAgreed
-        });
+        const { error } = enquiryValidationSchema.validate(req.body);
 
         if (error) {
-            return handleResponse(res, 400, false, error.details[0].message);
+            return res.status(400).json({ success: false, message: error.details[0].message });
         }
 
-        // Check if an enquiry already exists (assuming only one record is allowed)
-        let enquiry = await Enquiry.findOne();
+        // Check if an enquiry already exists
+        let enquiry = await Enquiry.findOne({ parentEmail });
 
         if (enquiry) {
             // Update existing enquiry
@@ -357,13 +367,11 @@ async function createEnquiryController(req, res) {
             enquiry.medium = medium;
             enquiry.parentName = parentName;
             enquiry.studentName = studentName;
-            enquiry.parentEmail = parentEmail;
             enquiry.mobileNumber = mobileNumber;
             enquiry.privacyPolicyAgreed = privacyPolicyAgreed;
 
             const updatedEnquiry = await enquiry.save();
-
-            return handleResponse(res, 200, true, 'Enquiry updated successfully', updatedEnquiry);
+            return res.status(200).json({ success: true, message: 'Enquiry updated successfully', data: updatedEnquiry });
         } else {
             // Create and save new enquiry
             const newEnquiry = new Enquiry({
@@ -378,13 +386,13 @@ async function createEnquiryController(req, res) {
             });
 
             const savedEnquiry = await newEnquiry.save();
-
-            return handleResponse(res, 201, true, 'Enquiry created successfully', savedEnquiry);
+            return res.status(201).json({ success: true, message: 'Enquiry created successfully', data: savedEnquiry });
         }
     } catch (error) {
         console.error("Error creating or updating enquiry:", error);
-        return handleResponse(res, 500, false, 'An error occurred while creating or updating the enquiry', error);
+        return res.status(500).json({ success: false, message: 'An error occurred while creating or updating the enquiry', error });
     }
 }
 
-module.exports = { getLogo, logoController, createFacilityController, getAllFacilities, deleteFacility, createOrUpdateAbout, getAbout, createTeacherController, deleteTeacher, getAllTeachers, createContactDetailsController, getAllEnquiry, createEnquiryController }
+
+module.exports = { getLogo, logoController, createFacilityController, getAllFacilities, deleteFacility, createOrUpdateAbout, getAbout, createTeacherController, deleteTeacher, getAllTeachers, createContactDetailsController, getAllEnquiry, createEnquiryController, getContactDetails }

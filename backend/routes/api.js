@@ -25,6 +25,7 @@ router.post("/teacher-create", upload.single('teacher_profile_image'), homeContr
 router.get("/teachers/all", homeController.getAllTeachers)
 router.delete("/teachers/:id", homeController.deleteTeacher)
 router.post("/contact-details/create", upload.single('image'), homeController.createContactDetailsController)
+router.get("/getContactDetails", homeController.getContactDetails)
 
 
 // //======================== User ======================================
